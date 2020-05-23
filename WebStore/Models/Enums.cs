@@ -2,6 +2,6 @@
 {
     public enum Sex
     {
-        Male,Female,Other
+        Мужской,Женский,Другой
     }
 }
