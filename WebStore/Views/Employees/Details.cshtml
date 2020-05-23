@@ -1,0 +1,21 @@
+﻿@model WebStore.Models.Employee
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Сотрудник id: @Model.Id</title>
+</head>
+<body>
+    <p>Фамилия: @Model.Surname</p>
+    <p>Имя: @Model.FirstName</p>
+    <p>Отчество: @Model.Patronymic</p>
+    <p>Возраст: @Model.Age</p>
+    <br />
+    <p>Пол: @Model.Sex</p>
+    <p>Родился: @Model.BirthdayDate.ToShortDateString()</p>
+    <p>Нанят(а): @Model.HiredDate.ToShortDateString()</p>
+
+    <a href="/Employees/Index">Назад к списку</a>
+</body>
+</html>
