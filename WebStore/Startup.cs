@@ -35,7 +35,7 @@ namespace WebStore
 
             app.UseEndpoints(endpoints =>
             {
-                //endpoints.MapDefaultControllerRoute();
+                endpoints.MapDefaultControllerRoute();
                 endpoints.MapControllerRoute( name: "Employees", pattern: "{controller=Employees}/{action=Index}/{id?}");
             });
         }
