@@ -1,38 +1,28 @@
-﻿@model IEnumerable<WebStore.Models.Employee>
+﻿@model IEnumerable<Employee>
 
-<!DOCTYPE html>
+    <div class="container">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Имя</th>
+                    <th>Фамилия</th>
+                    <th>Отчество</th>
+                    <th>Возраст</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.FirstName</td>
+                        <td>@item.Surname</td>
+                        <td>@item.Patronymic</td>
+                        <td>@item.Age</td>
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Сотрудники</title>
-</head>
-<body>
-    <h3>Сотрудники</h3><hr />
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Имя</th>
-                <th>Фамилия</th>
-                <th>Отчество</th>
-                <th>Возраст</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
-            <tr>
-                <td>@item.FirstName</td>
-                <td>@item.Surname</td>
-                <td>@item.Patronymic</td>
-                <td>@item.Age</td>
-
-                <td><a href="/Employees/Details/@item.Id">Инфо</a></td>
-            </tr>
-            }
-        </tbody>
-    </table>
-</body>
-</html>
+                        <td><a asp-controller="Employees" asp-action="Details" asp-route-id="@item.Id">Инфо</a></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
