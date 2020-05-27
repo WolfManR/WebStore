@@ -4,7 +4,7 @@ namespace WebStore.Controllers
 {
     public class LoginController : Controller
     {
-        public IActionResult Index()
+        public IActionResult LoginForm()
         {
             return View();
         }
