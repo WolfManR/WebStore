@@ -40,7 +40,9 @@ namespace WebStore
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapDefaultControllerRoute();
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=Shop}/{action=Home}/{id?}");
             });
         }
     }
