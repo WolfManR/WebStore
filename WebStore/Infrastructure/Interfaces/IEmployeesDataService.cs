@@ -4,7 +4,7 @@ using WebStore.Models;
 
 namespace WebStore.Infrastructure.Interfaces
 {
-    public interface IEmployeesData
+    public interface IEmployeesDataService
     {
         IEnumerable<Employee> GetAll();
 

@@ -1,58 +1,123 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-using System.Collections.Generic;
-using System.Linq;
+using System;
 
+using WebStore.Infrastructure.Interfaces;
 using WebStore.Models;
+using WebStore.ViewModels;
 
 namespace WebStore.Controllers
 {
     public class EmployeesController : Controller
     {
-        private static readonly List<Employee> employees = TestData.Employees;
+        #region Fields
 
-        public IActionResult Index()
+        private readonly IEmployeesDataService dataService;
+        #endregion
+
+
+        #region CTORs
+
+        public EmployeesController(IEmployeesDataService dataService)
         {
-            return View(employees);
+            this.dataService = dataService;
         }
+        #endregion
+
+
+        #region Main Presenters
+
+        public IActionResult Index() => View(dataService.GetAll());
 
         public IActionResult Details(int id)
         {
-            var employee = employees.FirstOrDefault(e => e.Id == id);
+            var employee = dataService.GetById(id);
 
             if (employee is null) return NotFound();
             return View(employee);
         }
+        #endregion
 
-        public IActionResult Create() => View();
+
+        #region CRUD
+
+        #region Редактирование
+
+        public IActionResult Edit(int? Id)
+        {
+            if (Id is null) return View(new EmployeeViewModel());
+
+            if (Id < 0) return BadRequest();
+
+            var employee = dataService.GetById((int)Id);
+            if (employee is null) return NotFound();
+
+            return View(new EmployeeViewModel
+            {
+                Id = employee.Id,
+                Surname = employee.Surname,
+                Name = employee.FirstName,
+                Patronymic = employee.Patronymic,
+                Age = employee.Age
+            });
+        }
 
         [HttpPost]
-        public IActionResult Create(Employee employee)
+        public IActionResult Edit(EmployeeViewModel Model)
         {
-            employees.Add(employee);
-            return RedirectToAction(nameof(Index));
+            _ = Model ?? throw new ArgumentNullException(nameof(Model));
+
+            var employee = new Employee
+            {
+                Id = Model.Id,
+                FirstName = Model.Name,
+                Surname = Model.Surname,
+                Patronymic = Model.Patronymic,
+                Age = Model.Age
+            };
+
+            if (Model.Id == 0) dataService.Add(employee);
+            else dataService.Edit(employee);
+
+            dataService.SaveChanges();
+
+            return RedirectToAction("Index");
         }
 
-        public IActionResult Edit(int? id)
+        #endregion
+
+
+        #region Удаление
+
+        public IActionResult Delete(int? id)
         {
-            if (id == null) return RedirectToAction(nameof(Index));
-            var employee = employees.First(x => Equals(x.Id, id));
-            return employee != null ? (IActionResult)View(employee) : NotFound();
+            _ = id ?? throw new ArgumentNullException(nameof(id));
+            if (id <= 0) return BadRequest();
+
+            var employee = dataService.GetById((int)id);
+            if (employee is null) return NotFound();
+
+            return View(new EmployeeViewModel
+            {
+                Id = employee.Id,
+                Surname = employee.Surname,
+                Name = employee.FirstName,
+                Patronymic = employee.Patronymic,
+                Age = employee.Age
+            });
         }
+
         [HttpPost]
-        public IActionResult Edit(int Id, Employee employee)
+        public IActionResult Delete(int id)
         {
-            if (Id == employee.Id) return null;
-            return RedirectToAction(nameof(Index));
+            dataService.Delete(id);
+
+            dataService.SaveChanges();
+
+            return RedirectToAction("Index");
         }
 
-        public IActionResult Delete() => View();
-
-        [HttpPost]
-        public IActionResult Delete(Employee employee)
-        {
-            employees.Remove(employee);
-            return RedirectToAction(nameof(Index));
-        }
+        #endregion 
+        #endregion
     }
 }
