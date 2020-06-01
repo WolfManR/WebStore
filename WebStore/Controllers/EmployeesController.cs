@@ -63,20 +63,23 @@ namespace WebStore.Controllers
         }
 
         [HttpPost]
-        public IActionResult Edit(EmployeeViewModel Model)
+        public IActionResult Edit(EmployeeViewModel model)
         {
-            _ = Model ?? throw new ArgumentNullException(nameof(Model));
+            _ = model ?? throw new ArgumentNullException(nameof(model));
+
+            if (model.Age < 18 || model.Age > 75) ModelState.AddModelError("Age", "Допустимый возраст от 18 до 75");
+            if (!ModelState.IsValid) return View(model);
 
             var employee = new Employee
             {
-                Id = Model.Id,
-                FirstName = Model.Name,
-                Surname = Model.Surname,
-                Patronymic = Model.Patronymic,
-                Age = Model.Age
+                Id = model.Id,
+                FirstName = model.Name,
+                Surname = model.Surname,
+                Patronymic = model.Patronymic,
+                Age = model.Age
             };
 
-            if (Model.Id == 0) dataService.Add(employee);
+            if (model.Id == 0) dataService.Add(employee);
             else dataService.Edit(employee);
 
             dataService.SaveChanges();
