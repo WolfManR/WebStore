@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 
-namespace WebStore.Models
+using WebStore.Models;
+
+namespace WebStore.Data
 {
     public static class TestData
     {
