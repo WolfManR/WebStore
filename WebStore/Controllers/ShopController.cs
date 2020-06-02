@@ -4,6 +4,7 @@ namespace WebStore.Controllers
 {
     public class ShopController : Controller
     {
+        public IActionResult Home() => View();
         public IActionResult Products() => View();
         public IActionResult ProductDetails() => View();
         public IActionResult Checkout() => View();

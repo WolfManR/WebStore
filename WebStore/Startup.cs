@@ -4,6 +4,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
+using WebStore.Infrastructure.Interfaces;
+using WebStore.Infrastructure.Services;
+
 namespace WebStore
 {
     public class Startup
@@ -18,6 +21,7 @@ namespace WebStore
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
+            services.AddSingleton<IEmployeesDataService, InMemoryEmployeesDataService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -36,7 +40,9 @@ namespace WebStore
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapDefaultControllerRoute();
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=Shop}/{action=Home}/{id?}");
             });
         }
     }
