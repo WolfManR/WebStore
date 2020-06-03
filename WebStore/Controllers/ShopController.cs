@@ -15,7 +15,23 @@ namespace WebStore.Controllers
         {
             this.productDataService = productDataService;
         }
-        public IActionResult Home() => View();
+        public IActionResult Home()
+        {
+            var products = productDataService.GetProducts();
+
+            return View(new CatalogViewModel
+            {
+                Products = products.Select(p => new ProductViewModel
+                {
+                    Id = p.Id,
+                    Name = p.Name,
+                    Order = p.Order,
+                    Price = p.Price,
+                    ImageUrl = p.ImageUrl
+                }).Take(6).OrderBy(p => p.Order)
+            });
+        }
+
         public IActionResult Products(int? SectionId, int? BrandId)
         {
             var filter = new ProductFilter
