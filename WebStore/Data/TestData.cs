@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 using WebStore.Domain.Entities;
 using WebStore.Models;
@@ -114,6 +115,160 @@ namespace WebStore.Data
             new Product { Id = 10, Name = "Женские джинсы", Price = 1025, ImageUrl = "product10.jpg", Order = 9, SectionId = 25, BrandId = 3 },
             new Product { Id = 11, Name = "Джинсы женские", Price = 1025, ImageUrl = "product11.jpg", Order = 10, SectionId = 25, BrandId = 3 },
             new Product { Id = 12, Name = "Летний костюм", Price = 1025, ImageUrl = "product12.jpg", Order = 11, SectionId = 25, BrandId = 3 },
+        };
+        public static IEnumerable<Account> Accounts { get; } = new[]
+        {
+            new Account{Id=1,FirstName="Annie",Surname="Davis",AvatarUrl="man-one.jpg"},
+            new Account{Id=2,FirstName="Janis",Surname="Gallagher",AvatarUrl="man-two.jpg"},
+            new Account{Id=3,FirstName="Jocombo",Surname="Tanates",AvatarUrl="man-three.jpg"},
+            new Account{Id=4,FirstName="Kenet",Surname="White",AvatarUrl="man-four.jpg"}
+        };
+        public static IEnumerable<BlogPost> BlogPosts { get; } = new[]
+        {
+            new BlogPost{
+                Id=1,
+                Subject="Girls Pink T Shirt arrived in store",
+                RegistrationTime=new DateTime(2013,12,5,13,33,0),
+                MainImageUrl="blog-one.jpg",
+                ShortDesc="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+                Tags=new []{ "Pink", "T-Shirt", "Girls" },
+                Text=new[]
+                {
+                    "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+                    "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.",
+                    "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.",
+                    "Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem."
+                },
+                Comments = new[]
+                {
+                    new Comment
+                    {
+                        Id=1,
+                        AccountId=1,
+                        Text="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+                    },
+                    new Comment
+                    {
+                        Id=2,
+                        AccountId=2,
+                        Text="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+                        Time=new DateTime(2013,12,5,13,33,0),
+                        ParentCommentId=1
+                    },
+                    new Comment
+                    {
+                        Id=3,
+                        AccountId=3,
+                        Text="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+                        Time=new DateTime(2013,12,5,13,33,0),
+                        ParentCommentId=2
+                    },
+                    new Comment
+                    {
+                        Id=4,
+                        AccountId=4,
+                        Text="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+                        Time=new DateTime(2013,12,5,13,33,0),
+                        ParentCommentId=1
+                    }
+                }
+            },
+            new BlogPost{
+                Id=2,
+                Subject="Girls Pink T Shirt arrived in store",
+                RegistrationTime=new DateTime(2013,12,5,13,33,0),
+                MainImageUrl="blog-two.jpg",
+                ShortDesc="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+                Tags=new []{ "Pink", "T-Shirt", "Girls" },
+                Text=new[]
+                {
+                    "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+                    "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.",
+                    "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.",
+                    "Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem."
+                },
+                Comments = new[]
+                {
+                    new Comment
+                    {
+                        Id=1,
+                        AccountId=1,
+                        Text="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+                    },
+                    new Comment
+                    {
+                        Id=2,
+                        AccountId=2,
+                        Text="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+                        Time=new DateTime(2013,12,5,13,33,0),
+                        ParentCommentId=1
+                    },
+                    new Comment
+                    {
+                        Id=3,
+                        AccountId=3,
+                        Text="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+                        Time=new DateTime(2013,12,5,13,33,0),
+                        ParentCommentId=2
+                    },
+                    new Comment
+                    {
+                        Id=4,
+                        AccountId=4,
+                        Text="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+                        Time=new DateTime(2013,12,5,13,33,0),
+                        ParentCommentId=1
+                    }
+                }
+            },
+            new BlogPost{
+                Id=2,
+                Subject="Girls Pink T Shirt arrived in store",
+                RegistrationTime=new DateTime(2013,12,5,13,33,0),
+                MainImageUrl="blog-three.jpg",
+                ShortDesc="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+                Tags=new []{ "Pink", "T-Shirt", "Girls" },
+                Text=new[]
+                {
+                    "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+                    "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.",
+                    "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.",
+                    "Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem."
+                },
+                Comments = new[]
+                {
+                    new Comment
+                    {
+                        Id=1,
+                        AccountId=1,
+                        Text="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+                    },
+                    new Comment
+                    {
+                        Id=2,
+                        AccountId=2,
+                        Text="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+                        Time=new DateTime(2013,12,5,13,33,0),
+                        ParentCommentId=1
+                    },
+                    new Comment
+                    {
+                        Id=3,
+                        AccountId=3,
+                        Text="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+                        Time=new DateTime(2013,12,5,13,33,0),
+                        ParentCommentId=1
+                    },
+                    new Comment
+                    {
+                        Id=4,
+                        AccountId=4,
+                        Text="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+                        Time=new DateTime(2013,12,5,13,33,0),
+                        ParentCommentId=3
+                    }
+                }
+            }
         };
     }
 }
