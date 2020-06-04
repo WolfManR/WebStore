@@ -28,7 +28,7 @@ namespace WebStore.Controllers
                 shortViews.Add(new BlogPostShortInfoViewModel
                 {
                     Id = item.Id,
-                    Author=new AccountViewModel {Id=author.Id,AvatarUrl=author.AvatarUrl,FirstName=author.FirstName,Surname=author.Surname },
+                    Author=new AccountViewModel {Id=author.Id,AvatarUrl=author.AvatarUrl,Firstname=author.FirstName,Surname=author.Surname },
                     MainImageUrl = item.MainImageUrl,
                     Subject = item.Subject,
                     RegistrationTime = item.RegistrationTime,
@@ -55,7 +55,7 @@ namespace WebStore.Controllers
                 comments_views.Add(new CommentViewModel
                 {
                     Id = item.Id,
-                    Account = new AccountViewModel { Id = account.Id, AvatarUrl = account.AvatarUrl, FirstName = account.FirstName, Surname = account.Surname },
+                    Account = new AccountViewModel { Id = account.Id, AvatarUrl = account.AvatarUrl, Firstname = account.FirstName, Surname = account.Surname },
                     Text = item.Text,
                     Time = item.Time,
                     ParentCommentId=item.ParentCommentId
@@ -79,7 +79,7 @@ namespace WebStore.Controllers
             return View(new BlogPostViewModel
             {
                 Id = post.Id,
-                Author = new AccountViewModel { Id = author.Id, AvatarUrl = author.AvatarUrl, FirstName = author.FirstName, Surname = author.Surname },
+                Author = new AccountViewModel { Id = author.Id, AvatarUrl = author.AvatarUrl, Firstname = author.FirstName, Surname = author.Surname },
                 MainImageUrl = post.MainImageUrl,
                 RegistrationTime = post.RegistrationTime,
                 Subject = post.Subject,
