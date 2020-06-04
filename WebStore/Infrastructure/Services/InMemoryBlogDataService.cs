@@ -1,23 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
+using WebStore.Data;
 using WebStore.Domain.Entities;
 using WebStore.Infrastructure.Interfaces;
 
 namespace WebStore.Infrastructure.Services
 {
-    public class InMemoryBlogDataService : IBlogDataService
+    public class InMemoryBlogDataService : IRepo<BlogPost>
     {
-        public IEnumerable<BlogPost> GetAll()
-        {
-            throw new NotImplementedException();
-        }
-
-        public BlogPost GetById(int id)
-        {
-            throw new NotImplementedException();
-        }
+        public IEnumerable<BlogPost> GetAll() => TestData.BlogPosts;
+        public BlogPost GetById(int id) => TestData.BlogPosts.FirstOrDefault(x => x.Id == id);
     }
 }
