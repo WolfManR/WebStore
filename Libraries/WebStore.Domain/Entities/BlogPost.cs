@@ -8,6 +8,7 @@ namespace WebStore.Domain.Entities
     public class BlogPost : BaseEntity
     {
         public string Subject { get; set; }
+        public int AuthorAccountId { get; set; }
         public DateTime RegistrationTime { get; set; }
         public string MainImageUrl { get; set; }
         public string ShortDesc { get; set; }

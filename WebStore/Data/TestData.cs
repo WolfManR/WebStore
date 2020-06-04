@@ -121,12 +121,14 @@ namespace WebStore.Data
             new Account{Id=1,FirstName="Annie",Surname="Davis",AvatarUrl="man-one.jpg"},
             new Account{Id=2,FirstName="Janis",Surname="Gallagher",AvatarUrl="man-two.jpg"},
             new Account{Id=3,FirstName="Jocombo",Surname="Tanates",AvatarUrl="man-three.jpg"},
+            new Account{Id=5,FirstName="Mac",Surname="Doe",AvatarUrl="man-three.jpg"},
             new Account{Id=4,FirstName="Kenet",Surname="White",AvatarUrl="man-four.jpg"}
         };
         public static IEnumerable<BlogPost> BlogPosts { get; } = new[]
         {
             new BlogPost{
                 Id=1,
+                AuthorAccountId=5,
                 Subject="Girls Pink T Shirt arrived in store",
                 RegistrationTime=new DateTime(2013,12,5,13,33,0),
                 MainImageUrl="blog-one.jpg",
@@ -175,6 +177,7 @@ namespace WebStore.Data
             },
             new BlogPost{
                 Id=2,
+                AuthorAccountId=3,
                 Subject="Girls Pink T Shirt arrived in store",
                 RegistrationTime=new DateTime(2013,12,5,13,33,0),
                 MainImageUrl="blog-two.jpg",
@@ -223,6 +226,7 @@ namespace WebStore.Data
             },
             new BlogPost{
                 Id=2,
+                AuthorAccountId=4,
                 Subject="Girls Pink T Shirt arrived in store",
                 RegistrationTime=new DateTime(2013,12,5,13,33,0),
                 MainImageUrl="blog-three.jpg",
