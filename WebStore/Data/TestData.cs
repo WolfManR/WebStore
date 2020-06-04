@@ -225,7 +225,7 @@ namespace WebStore.Data
                 }
             },
             new BlogPost{
-                Id=2,
+                Id=3,
                 AuthorAccountId=4,
                 Subject="Girls Pink T Shirt arrived in store",
                 RegistrationTime=new DateTime(2013,12,5,13,33,0),
