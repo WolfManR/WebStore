@@ -1,12 +1,9 @@
-﻿@{
+﻿@model CatalogViewModel
+@{
     ViewBag.Title = "Shop";
 }
 
-<section id="advertisement">
-    <div class="container">
-        <img src="~/images/shop/advertisement.jpg" alt="" />
-    </div>
-</section>
+<partial name="Partial/_Advertisement" />
 
 <section>
     <div class="container">
@@ -16,7 +13,13 @@
             </div>
 
             <div class="col-sm-9 padding-right">
-                <partial name="Partial/_Products_FeaturesItems"/>
+                <partial name="Partial/_FeaturesItems" model="Model.Products" />
+                @*<ul class="pagination">
+                  <li class="active"><a href="">1</a></li>
+                  <li><a href="">2</a></li>
+                  <li><a href="">3</a></li>
+                  <li><a href="">&raquo;</a></li>
+                </ul>*@
             </div>
         </div>
     </div>
