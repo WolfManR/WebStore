@@ -30,9 +30,8 @@ namespace WebStore
 
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
-            services.AddSingleton<IEmployeesDataService, InMemoryEmployeesDataService>();
+            services.AddScoped<IRepo<Account>, SqlAccountDataService>();
             services.AddScoped<IProductDataService, SqlProductDataService>();
-            services.AddSingleton<IRepo<Account>, InMemoryAccountDataService>();
             services.AddSingleton<IRepo<BlogPost>, InMemoryBlogDataService>();
         }
 
