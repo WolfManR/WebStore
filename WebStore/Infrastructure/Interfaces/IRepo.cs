@@ -6,5 +6,10 @@ namespace WebStore.Infrastructure.Interfaces
     {
         IEnumerable<T> GetAll();
         T GetById(int id);
+
+        int Add(T entity);
+        void Edit(T entity);
+        bool Delete(int id);
+        void SaveChanges();
     }
 }
