@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Employee>
+﻿@model IEnumerable<AccountViewModel>
 @{ 
     ViewBag.Title = "Employees";
 }
@@ -11,7 +11,6 @@
                 <tr>
                     <th>Имя</th>
                     <th>Фамилия</th>
-                    <th>Отчество</th>
                     <th>Возраст</th>
                     <th></th>
                 </tr>
@@ -20,15 +19,14 @@
                 @foreach (var item in Model)
                 {
                     <tr>
-                        <td>@item.FirstName</td>
+                        <td>@item.Firstname</td>
                         <td>@item.Surname</td>
-                        <td>@item.Patronymic</td>
                         <td>@item.Age</td>
 
                         <td>
-                            <a asp-controller="Employees" asp-action="Details" asp-route-id="@item.Id">Инфо</a> |
-                            <a asp-controller="Employees" asp-action="Edit" asp-route-id="@item.Id">Изменить</a> |
-                            <a asp-controller="Employees" asp-action="Delete" asp-route-id="@item.Id">Удалить</a>
+                            <a asp-controller="Accounts" asp-action="Details" asp-route-id="@item.Id">Инфо</a> |
+                            <a asp-controller="Accounts" asp-action="Edit" asp-route-id="@item.Id">Изменить</a> |
+                            <a asp-controller="Accounts" asp-action="Delete" asp-route-id="@item.Id">Удалить</a>
                         </td>
                     </tr>
                 }

@@ -1,0 +1,17 @@
+﻿@model AccountViewModel
+@{ 
+    ViewBag.Title = $"User {Model.Id}";
+}
+
+<div class="container">
+    <h3>@ViewBag.Title</h3>
+    <br />
+    <p>Имя: @Model.Firstname</p>
+    <p>Фамилия: @Model.Surname</p>
+    <p>Возраст: @Model.Age</p>
+    <br />
+    <p>Пол: @Model.Sex</p>
+    <p>Родился: @Model.Birthday.ToShortDateString()</p>
+    <hr />
+    <a asp-controller="Accounts" asp-action="Index">Назад к списку</a>
+</div>

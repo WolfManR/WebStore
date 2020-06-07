@@ -1,13 +1,13 @@
-﻿@model EmployeeViewModel
+﻿@model AccountViewModel
 @{
-    ViewBag.Title = $"Edit Employee id : {Model.Id}";
+    ViewBag.Title = $"Edit user id : {Model.Id}";
 }
 
 <div class="container">
     <h3>@ViewBag.Title</h3>
     <hr />
 
-    <form asp-controller="Employees" asp-action="Edit" method="post">
+    <form asp-controller="Accounts" asp-action="Edit" method="post">
         <div class="row">
             <div class="col-md-4">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -15,22 +15,18 @@
                 <input asp-for="Id" type="hidden" />
 
                 <div clas="form-group">
+                    <label asp-for="Firstname" class="control-label">Имя</label>
+                    <input asp-for="Firstname" class="form-control" />
+                    <span asp-validation-for="Firstname" class="text-danger"></span>
+                </div>
+
+                <div clas="form-group">
                     <label asp-for="Surname" class="control-label">Фамилия</label>
                     <input asp-for="Surname" class="form-control" />
                     <span asp-validation-for="Surname" class="text-danger"></span>
                 </div>
 
-                <div clas="form-group">
-                    <label asp-for="Name" class="control-label">Имя</label>
-                    <input asp-for="Name" class="form-control" />
-                    <span asp-validation-for="Name" class="text-danger"></span>
-                </div>
 
-                <div clas="form-group">
-                    <label asp-for="Patronymic" class="control-label">Отчество</label>
-                    <input asp-for="Patronymic" class="form-control" />
-                    <span asp-validation-for="Patronymic" class="text-danger"></span>
-                </div>
 
                 <div clas="form-group">
                     <label asp-for="Age" class="control-label">Возраст</label>
