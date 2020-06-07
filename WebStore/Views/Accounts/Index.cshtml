@@ -24,9 +24,9 @@
                         <td>@item.Age</td>
 
                         <td>
-                            <a asp-controller="Accounts" asp-action="Details" asp-route-id="@item.Id">Инфо</a> |
-                            <a asp-controller="Accounts" asp-action="Edit" asp-route-id="@item.Id">Изменить</a> |
-                            <a asp-controller="Accounts" asp-action="Delete" asp-route-id="@item.Id">Удалить</a>
+                            <a asp-action="Details" asp-route-id="@item.Id">Инфо</a> |
+                            <a asp-action="Edit" asp-route-id="@item.Id">Изменить</a> |
+                            <a asp-action="Delete" asp-route-id="@item.Id">Удалить</a>
                         </td>
                     </tr>
                 }

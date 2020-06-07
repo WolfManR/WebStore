@@ -42,9 +42,6 @@ namespace WebStore.Infrastructure.Services.InSQL
         {
             _ = entity ?? throw new ArgumentNullException(nameof(entity));
 
-            var db_item = GetById(entity.Id);
-            if (db_item is null) return;
-
             db.Accounts.Update(entity);
             SaveChanges();
         }
