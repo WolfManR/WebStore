@@ -21,14 +21,14 @@ namespace WebStore.Controllers
 
             return View(new CatalogViewModel
             {
-                Products = products.Select(p => new ProductViewModel
+                Products = products.Take(6).Select(p => new ProductViewModel
                 {
                     Id = p.Id,
                     Name = p.Name,
                     Order = p.Order,
                     Price = p.Price,
                     ImageUrl = p.ImageUrl
-                }).Take(6).OrderBy(p => p.Order)
+                }).OrderBy(p => p.Order)
             });
         }
 
