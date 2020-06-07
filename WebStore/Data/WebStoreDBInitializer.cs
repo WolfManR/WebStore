@@ -51,6 +51,17 @@ namespace WebStore.Data
 
                 transaction.Commit();
             }
+
+            using (var transaction = DB.BeginTransaction())
+            {
+                db.Accounts.AddRange(TestData.Accounts);
+
+                DB.ExecuteSqlRaw("SET IDENTITY_INSERT [dbo].[Accounts] ON");
+                db.SaveChanges();
+                DB.ExecuteSqlRaw("SET IDENTITY_INSERT [dbo].[Accounts] OFF");
+
+                transaction.Commit();
+            }
         }
     }
 }
