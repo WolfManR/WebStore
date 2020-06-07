@@ -9,7 +9,7 @@ namespace WebStore.Domain.Entities
     {
         [Required]
         [MinLength(2),MaxLength(200)]
-        public string FirstName { get; set; }
+        public string Firstname { get; set; }
 
         [Required]
         [MinLength(2), MaxLength(200)]
