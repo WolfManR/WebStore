@@ -9,7 +9,8 @@ using WebStore.DAL.Context;
 using WebStore.Data;
 using WebStore.Domain.Entities;
 using WebStore.Infrastructure.Interfaces;
-using WebStore.Infrastructure.Services;
+using WebStore.Infrastructure.Services.InMemory;
+using WebStore.Infrastructure.Services.InSQL;
 
 namespace WebStore
 {
@@ -30,7 +31,7 @@ namespace WebStore
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
             services.AddSingleton<IEmployeesDataService, InMemoryEmployeesDataService>();
-            services.AddSingleton<IProductDataService, InMemoryProductDataService>();
+            services.AddScoped<IProductDataService, SqlProductDataService>();
             services.AddSingleton<IRepo<Account>, InMemoryAccountDataService>();
             services.AddSingleton<IRepo<BlogPost>, InMemoryBlogDataService>();
         }

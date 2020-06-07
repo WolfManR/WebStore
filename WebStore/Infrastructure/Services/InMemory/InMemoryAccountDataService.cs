@@ -5,7 +5,7 @@ using WebStore.Data;
 using WebStore.Domain.Entities;
 using WebStore.Infrastructure.Interfaces;
 
-namespace WebStore.Infrastructure.Services
+namespace WebStore.Infrastructure.Services.InMemory
 {
     public class InMemoryAccountDataService : IRepo<Account>
     {
