@@ -73,8 +73,8 @@ namespace WebStore.Data
             new Account{Id=1,Firstname="Annie",Surname="Davis",AvatarUrl="man-one.jpg",Sex=Sex.Male,Age=32, BirthdayDate=new DateTime(1988,6,2)},
             new Account{Id=2,Firstname="Janis",Surname="Gallagher",AvatarUrl="man-two.jpg",Sex=Sex.Male,Age=35, BirthdayDate=new DateTime(1985,2,4)},
             new Account{Id=3,Firstname="Jocombo",Surname="Tanates",AvatarUrl="man-three.jpg",Sex=Sex.Female,Age=25, BirthdayDate=new DateTime(1995,4,7)},
+            new Account{Id=4,Firstname="Kenet",Surname="White",AvatarUrl="man-four.jpg",Sex=Sex.Male,Age=48, BirthdayDate=new DateTime(1971,7,22)},
             new Account{Id=5,Firstname="Mac",Surname="Doe",AvatarUrl="man-three.jpg",Sex=Sex.Male,Age=28, BirthdayDate=new DateTime(1991,8,16)},
-            new Account{Id=4,Firstname="Kenet",Surname="White",AvatarUrl="man-four.jpg",Sex=Sex.Male,Age=48, BirthdayDate=new DateTime(1971,7,22)}
         };
         public static IEnumerable<BlogPost> BlogPosts { get; } = new[]
         {
