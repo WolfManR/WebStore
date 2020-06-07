@@ -1,4 +1,4 @@
-﻿namespace WebStore.Models
+﻿namespace WebStore.Domain
 {
     public enum Sex
     {
