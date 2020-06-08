@@ -18,11 +18,9 @@ namespace WebStore.Infrastructure.Services.InSQL
         public int Add(Account entity)
         {
             _ = entity ?? throw new ArgumentNullException(nameof(entity));
+            if(entity.Id!=0) throw new InvalidOperationException("The primary key is manually set for the employee to be added.");
 
             db.Accounts.Add(entity);
-
-            SaveChanges();
-
             return entity.Id;
         }
 
@@ -32,9 +30,6 @@ namespace WebStore.Infrastructure.Services.InSQL
             if (db_item is null) return false;
 
             db.Accounts.Remove(db_item);
-
-            SaveChanges();
-
             return true;
         }
 
@@ -43,7 +38,6 @@ namespace WebStore.Infrastructure.Services.InSQL
             _ = entity ?? throw new ArgumentNullException(nameof(entity));
 
             db.Accounts.Update(entity);
-            SaveChanges();
         }
 
         public IEnumerable<Account> GetAll() => db.Accounts;
@@ -56,9 +50,9 @@ namespace WebStore.Infrastructure.Services.InSQL
             {
                 db.SaveChanges();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw new Exception($"Something bad happened while committing changes/n/n{ex.Message}");
             }
         }
     }

@@ -81,6 +81,15 @@ namespace WebStore.Controllers
             if (model.Id == 0) dataService.Add(account);
             else dataService.Edit(account);
 
+            try
+            {
+                dataService.SaveChanges();
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+
             return RedirectToAction("Index");
         }
 
@@ -110,6 +119,15 @@ namespace WebStore.Controllers
         public IActionResult Delete(int id)
         {
             dataService.Delete(id);
+
+            try
+            {
+                dataService.SaveChanges();
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
 
             return RedirectToAction("Index");
         }
