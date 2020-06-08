@@ -9,20 +9,17 @@ namespace WebStore.ViewModels
     {
         public int Id { get; set; }
 
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Имя не указано, обязательно к заполнению")]
-        [Display(Name = "Имя")]
-        [StringLength(maximumLength: 200, MinimumLength = 2, ErrorMessage = "должно быть от 2-ух до 200 символов")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Name not specified, required")]
+        [StringLength(maximumLength: 200, MinimumLength = 2, ErrorMessage = "must be from 2 to 200 characters")]
         public string Firstname { get; set; }
 
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Фамилия не указана, обязательно к заполнению")]
-        [Display(Name = "Фамилия")]
-        [StringLength(maximumLength: 200, MinimumLength = 2, ErrorMessage = "должно быть от 2-ух до 200 символов")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Surname not indicated, required")]
+        [StringLength(maximumLength: 200, MinimumLength = 2, ErrorMessage = "must be from 2 to 200 characters")]
         public string Surname { get; set; }
         public string AvatarUrl { get; set; }
 
 
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Возраст не указано, обязательно к заполнению")]
-        [Display(Name = "Возраст")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Age not specified, required")]
         [Range(18,75)]
         public int Age { get; set; }
 

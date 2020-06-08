@@ -10,19 +10,19 @@
 
     <div>
         <dl class="dl-horizontal">
-            <dt>Имя</dt>
+            <dt>Firstname</dt>
             <dd>@Html.DisplayFor(model => model.Firstname)</dd>
 
-            <dt>Фамилия</dt>
+            <dt>Surname</dt>
             <dd>@Html.DisplayFor(model => model.Surname)</dd>
 
-            <dt>Возраст</dt>
+            <dt>Age</dt>
             <dd>@Html.DisplayFor(model => model.Age)</dd>
         </dl>
 
         <form asp-action="Delete" asp-route-id="@Model.Id">
-            <input type="submit" value="Удалить" class="btn btn-danger" /> |
-            <a asp-action="Index">Назад к списку</a>
+            <input type="submit" value="Delete" class="btn btn-danger" /> |
+            <a asp-action="Index">Back to list</a>
         </form>
     </div>
 </div>

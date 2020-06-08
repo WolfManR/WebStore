@@ -7,12 +7,12 @@
     <h3>@ViewBag.Title</h3>
     <br />
     <img src="~/images/blog/@Model.AvatarUrl" /><br />
-    <p>Имя: @Model.Firstname</p>
-    <p>Фамилия: @Model.Surname</p>
-    <p>Возраст: @Model.Age</p>
+    <p>Firstname: @Model.Firstname</p>
+    <p>Surname: @Model.Surname</p>
+    <p>Age: @Model.Age</p>
     <br />
-    <p>Пол: @Model.Sex</p>
-    <p>Родился: @Model.Birthday.ToShortDateString()</p>
+    <p>Sex: @Model.Sex</p>
+    <p>Birthday: @Model.Birthday.ToShortDateString()</p>
     <hr />
-    <a asp-controller="Accounts" asp-action="Index">Назад к списку</a>
+    <a asp-controller="Accounts" asp-action="Index">Back to list</a>
 </div>

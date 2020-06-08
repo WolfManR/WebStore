@@ -9,9 +9,9 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th>Имя</th>
-                    <th>Фамилия</th>
-                    <th>Возраст</th>
+                    <th>Firstname</th>
+                    <th>Surname</th>
+                    <th>Age</th>
                     <th></th>
                 </tr>
             </thead>
@@ -24,9 +24,9 @@
                         <td>@item.Age</td>
 
                         <td>
-                            <a asp-action="Details" asp-route-id="@item.Id">Инфо</a> |
-                            <a asp-action="Edit" asp-route-id="@item.Id">Изменить</a> |
-                            <a asp-action="Delete" asp-route-id="@item.Id">Удалить</a>
+                            <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                            <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                            <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
                         </td>
                     </tr>
                 }
