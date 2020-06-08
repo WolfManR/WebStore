@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 using System;
@@ -15,18 +17,24 @@ namespace WebStore.Controllers
         #region Fields
 
         private readonly IRepo<Account> dataService;
+        private readonly IMapper mapper;
         #endregion
 
 
         #region CTORs
 
-        public AccountsController(IRepo<Account> dataService) => this.dataService = dataService;
+        public AccountsController(IRepo<Account> dataService, IMapper mapper)
+        {
+            this.dataService = dataService;
+            this.mapper = mapper;
+        }
         #endregion
 
 
         #region Main Presenters
 
-        public IActionResult Index() => View(dataService.GetAll().Select(account=>new AccountViewModel{
+        public IActionResult Index() => View(dataService.GetAll().Select(account => new AccountViewModel
+        {
             Id = account.Id,
             Surname = account.Surname,
             Firstname = account.Firstname,
@@ -38,15 +46,7 @@ namespace WebStore.Controllers
             var account = dataService.GetById(id);
 
             if (account is null) return NotFound();
-            return View(new AccountViewModel {
-                Id = account.Id,
-                Firstname = account.Firstname,
-                Surname = account.Surname,
-                AvatarUrl = account.AvatarUrl,
-                Age = account.Age,
-                Sex = account.Sex,
-                Birthday = account.BirthdayDate
-            });
+            return View(mapper.Map<AccountViewModel>(account));
         }
         #endregion
 
@@ -66,16 +66,7 @@ namespace WebStore.Controllers
             if (account is null) return NotFound();
 
 
-            return View(new AccountViewModel
-            {
-                Id = account.Id,
-                Firstname = account.Firstname,
-                Surname = account.Surname,
-                AvatarUrl=account.AvatarUrl,
-                Age = account.Age,
-                Sex=account.Sex,
-                Birthday=account.BirthdayDate
-            });
+            return View(mapper.Map<AccountViewModel>(account));
         }
 
         [HttpPost]
@@ -85,16 +76,7 @@ namespace WebStore.Controllers
 
             if (!ModelState.IsValid) return View(model);
 
-            var account = new Account
-            {
-                Id = model.Id,
-                Firstname = model.Firstname,
-                Surname = model.Surname,
-                AvatarUrl=model.AvatarUrl,
-                Age = model.Age,
-                Sex=model.Sex,
-                BirthdayDate=model.Birthday
-            };
+            var account = mapper.Map<Account>(model);
 
             if (model.Id == 0) dataService.Add(account);
             else dataService.Edit(account);
