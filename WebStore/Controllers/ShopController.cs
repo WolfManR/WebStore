@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+
+using Microsoft.AspNetCore.Mvc;
 
 using System.Linq;
 
@@ -11,9 +13,12 @@ namespace WebStore.Controllers
     public class ShopController : Controller
     {
         private readonly IProductDataService productDataService;
-        public ShopController(IProductDataService productDataService)
+        private readonly IMapper mapper;
+
+        public ShopController(IProductDataService productDataService, IMapper mapper)
         {
             this.productDataService = productDataService;
+            this.mapper = mapper;
         }
         public IActionResult Home()
         {
@@ -21,14 +26,7 @@ namespace WebStore.Controllers
 
             return View(new CatalogViewModel
             {
-                Products = products.Take(6).Select(p => new ProductViewModel
-                {
-                    Id = p.Id,
-                    Name = p.Name,
-                    Order = p.Order,
-                    Price = p.Price,
-                    ImageUrl = p.ImageUrl
-                }).OrderBy(p => p.Order)
+                Products = products.Take(6).Select(p => mapper.Map<ProductViewModel>(p)).OrderBy(p => p.Order)
             });
         }
 
@@ -46,14 +44,7 @@ namespace WebStore.Controllers
             {
                 SectionId = SectionId,
                 BrandId = BrandId,
-                Products = products.Select(p => new ProductViewModel
-                {
-                    Id = p.Id,
-                    Name = p.Name,
-                    Order = p.Order,
-                    Price = p.Price,
-                    ImageUrl = p.ImageUrl
-                }).OrderBy(p => p.Order)
+                Products = products.Select(p => mapper.Map<ProductViewModel>(p)).OrderBy(p => p.Order)
             });
         }
 
