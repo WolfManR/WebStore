@@ -31,11 +31,11 @@ namespace WebStore
             services.AddDbContext<WebStoreDB>(opt => opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddTransient<WebStoreDBInitializer>();
 
-            services.AddAutoMapper(typeof(AccountProfile),typeof(ShopProfile));
+            services.AddAutoMapper(typeof(UserProfile),typeof(ShopProfile));
 
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
-            services.AddScoped<IRepo<Account>, SqlAccountDataService>();
+            services.AddScoped<IRepo<User>, SqlUserDataService>();
             services.AddScoped<IProductDataService, SqlProductDataService>();
             services.AddSingleton<IRepo<BlogPost>, InMemoryBlogDataService>();
         }

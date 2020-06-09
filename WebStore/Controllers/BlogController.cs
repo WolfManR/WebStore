@@ -12,7 +12,7 @@ namespace WebStore.Controllers
 {
     public class BlogController : Controller
     {
-        private readonly IRepo<Account> repoAccount;
+        private readonly IRepo<User> repoAccount;
         private readonly IRepo<BlogPost> repoBlogPost;
         public BlogController(IRepo<BlogPost> repoBlogPost)
         {
@@ -29,7 +29,7 @@ namespace WebStore.Controllers
                 shortViews.Add(new BlogPostShortInfoViewModel
                 {
                     Id = item.Id,
-                    Author=new AccountViewModel {Id=author.Id,AvatarUrl=author.AvatarUrl,Firstname=author.Firstname,Surname=author.Surname },
+                    Author=new UserViewModel {Id=author.Id,AvatarUrl=author.AvatarUrl,Firstname=author.Firstname,Surname=author.Surname },
                     MainImageUrl = item.MainImageUrl,
                     Subject = item.Subject,
                     RegistrationTime = item.RegistrationTime,
@@ -56,7 +56,7 @@ namespace WebStore.Controllers
                 comments_views.Add(new CommentViewModel
                 {
                     Id = item.Id,
-                    Account = new AccountViewModel { Id = account.Id, AvatarUrl = account.AvatarUrl, Firstname = account.Firstname, Surname = account.Surname },
+                    Account = new UserViewModel { Id = account.Id, AvatarUrl = account.AvatarUrl, Firstname = account.Firstname, Surname = account.Surname },
                     Text = item.Text,
                     Time = item.Time,
                     ParentCommentId=item.ParentCommentId
@@ -80,7 +80,7 @@ namespace WebStore.Controllers
             return View(new BlogPostViewModel
             {
                 Id = post.Id,
-                Author = new AccountViewModel { Id = author.Id, AvatarUrl = author.AvatarUrl, Firstname = author.Firstname, Surname = author.Surname },
+                Author = new UserViewModel { Id = author.Id, AvatarUrl = author.AvatarUrl, Firstname = author.Firstname, Surname = author.Surname },
                 MainImageUrl = post.MainImageUrl,
                 RegistrationTime = post.RegistrationTime,
                 Subject = post.Subject,

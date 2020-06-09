@@ -8,14 +8,14 @@ using WebStore.Infrastructure.Interfaces;
 
 namespace WebStore.Infrastructure.Services.InSQL
 {
-    public class SqlAccountDataService : IRepo<Account>
+    public class SqlUserDataService : IRepo<User>
     {
         private readonly WebStoreDB db;
 
-        public SqlAccountDataService(WebStoreDB db) => this.db = db;
+        public SqlUserDataService(WebStoreDB db) => this.db = db;
 
 
-        public int Add(Account entity)
+        public int Add(User entity)
         {
             _ = entity ?? throw new ArgumentNullException(nameof(entity));
             if(entity.Id!=0) throw new InvalidOperationException("The primary key is manually set for the employee to be added.");
@@ -33,16 +33,16 @@ namespace WebStore.Infrastructure.Services.InSQL
             return true;
         }
 
-        public void Edit(Account entity)
+        public void Edit(User entity)
         {
             _ = entity ?? throw new ArgumentNullException(nameof(entity));
 
             db.Accounts.Update(entity);
         }
 
-        public IEnumerable<Account> GetAll() => db.Accounts;
+        public IEnumerable<User> GetAll() => db.Accounts;
 
-        public Account GetById(int id) => db.Accounts.FirstOrDefault(e => e.Id == id);
+        public User GetById(int id) => db.Accounts.FirstOrDefault(e => e.Id == id);
 
         public void SaveChanges()
         {

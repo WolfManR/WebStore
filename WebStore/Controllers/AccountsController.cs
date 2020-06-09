@@ -16,14 +16,14 @@ namespace WebStore.Controllers
     {
         #region Fields
 
-        private readonly IRepo<Account> dataService;
+        private readonly IRepo<User> dataService;
         private readonly IMapper mapper;
         #endregion
 
 
         #region CTORs
 
-        public AccountsController(IRepo<Account> dataService, IMapper mapper)
+        public AccountsController(IRepo<User> dataService, IMapper mapper)
         {
             this.dataService = dataService;
             this.mapper = mapper;
@@ -33,7 +33,7 @@ namespace WebStore.Controllers
 
         #region Main Presenters
 
-        public IActionResult Index() => View(dataService.GetAll().Select(account => new AccountViewModel
+        public IActionResult Index() => View(dataService.GetAll().Select(account => new UserViewModel
         {
             Id = account.Id,
             Surname = account.Surname,
@@ -46,7 +46,7 @@ namespace WebStore.Controllers
             var account = dataService.GetById(id);
 
             if (account is null) return NotFound();
-            return View(mapper.Map<AccountViewModel>(account));
+            return View(mapper.Map<UserViewModel>(account));
         }
         #endregion
 
@@ -58,7 +58,7 @@ namespace WebStore.Controllers
         public IActionResult Edit(int? Id)
         {
             ViewBag.Avatars = new SelectList(new[] { "man-one.jpg", "man-two.jpg", "man-three.jpg", "man-four.jpg" });
-            if (Id is null) return View(new AccountViewModel());
+            if (Id is null) return View(new UserViewModel());
 
             if (Id < 0) return BadRequest();
 
@@ -66,17 +66,17 @@ namespace WebStore.Controllers
             if (account is null) return NotFound();
 
 
-            return View(mapper.Map<AccountViewModel>(account));
+            return View(mapper.Map<UserViewModel>(account));
         }
 
         [HttpPost]
-        public IActionResult Edit(AccountViewModel model)
+        public IActionResult Edit(UserViewModel model)
         {
             _ = model ?? throw new ArgumentNullException(nameof(model));
 
             if (!ModelState.IsValid) return View(model);
 
-            var account = mapper.Map<Account>(model);
+            var account = mapper.Map<User>(model);
 
             if (model.Id == 0) dataService.Add(account);
             else dataService.Edit(account);
@@ -106,7 +106,7 @@ namespace WebStore.Controllers
             var account = dataService.GetById((int)id);
             if (account is null) return NotFound();
 
-            return View(new AccountViewModel
+            return View(new UserViewModel
             {
                 Id = account.Id,
                 Surname = account.Surname,
