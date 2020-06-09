@@ -29,9 +29,7 @@ namespace WebStore.Components
 
             var parent_sections = sections.Where(s => s.ParentId is null);
 
-            var parent_Sections_views = parent_sections.Select(
-                s => mapper.Map<SectionViewModel>(s))
-               .ToList();
+            var parent_Sections_views = parent_sections.Select(mapper.Map<SectionViewModel>).ToList();
 
             foreach (var parent_section in parent_Sections_views)
             {

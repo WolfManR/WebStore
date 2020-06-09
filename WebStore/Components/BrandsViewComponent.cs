@@ -24,7 +24,7 @@ namespace WebStore.Components
         public IViewComponentResult Invoke() => View(GetBrands());
 
         private IEnumerable<BrandViewModel> GetBrands() => productDataService.GetBrands()
-               .Select(brand => mapper.Map<BrandViewModel>(brand))
+               .Select(mapper.Map<BrandViewModel>)
                .OrderBy(brand => brand.Order);
     }
 }
