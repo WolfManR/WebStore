@@ -7,7 +7,7 @@ namespace WebStore.ViewModels
     {
         public int Id { get; set; }
         public string Text { get; set; }
-        public AccountViewModel Account { get; set; }
+        public UserViewModel Account { get; set; }
         public DateTime Time { get; set; }
 
         public List<CommentViewModel> ChildComments { get; set; } = new List<CommentViewModel>();

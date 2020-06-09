@@ -5,7 +5,7 @@ using WebStore.Domain.Entities.Base;
 
 namespace WebStore.Domain.Entities
 {
-    public class Account : BaseEntity
+    public class User : BaseEntity
     {
         [Required]
         [MinLength(2),MaxLength(200)]
@@ -15,7 +15,6 @@ namespace WebStore.Domain.Entities
         [MinLength(2), MaxLength(200)]
         public string Surname { get; set; }
 
-        [Required]
         public string AvatarUrl { get; set; }
 
         [Range(18,75)]

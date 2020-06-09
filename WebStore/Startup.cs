@@ -14,6 +14,7 @@ using WebStore.Infrastructure.Interfaces;
 using WebStore.Infrastructure.Profiles;
 using WebStore.Infrastructure.Services.InMemory;
 using WebStore.Infrastructure.Services.InSQL;
+using WebStore.Infrastructure.Services.InSQL.Base;
 
 namespace WebStore
 {
@@ -31,11 +32,11 @@ namespace WebStore
             services.AddDbContext<WebStoreDB>(opt => opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddTransient<WebStoreDBInitializer>();
 
-            services.AddAutoMapper(typeof(AccountProfile),typeof(ShopProfile));
+            services.AddAutoMapper(typeof(EmployeeProfile),typeof(ShopProfile));
 
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
-            services.AddScoped<IRepo<Account>, SqlAccountDataService>();
+            services.AddScoped<IRepo<Employee>, BaseRepo<Employee>>();
             services.AddScoped<IProductDataService, SqlProductDataService>();
             services.AddSingleton<IRepo<BlogPost>, InMemoryBlogDataService>();
         }

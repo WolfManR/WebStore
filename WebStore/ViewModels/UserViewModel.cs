@@ -5,7 +5,7 @@ using WebStore.Domain;
 
 namespace WebStore.ViewModels
 {
-    public class AccountViewModel
+    public class UserViewModel
     {
         public int Id { get; set; }
 

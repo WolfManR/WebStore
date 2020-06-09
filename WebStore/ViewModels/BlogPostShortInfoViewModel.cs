@@ -6,7 +6,7 @@ namespace WebStore.ViewModels
     public class BlogPostShortInfoViewModel
     {
         public int Id { get; set; }
-        public AccountViewModel Author { get; set; }
+        public UserViewModel Author { get; set; }
         public string Subject { get; set; }
         public DateTime RegistrationTime { get; set; }
         public string MainImageUrl { get; set; }

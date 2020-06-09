@@ -7,12 +7,12 @@ using WebStore.Infrastructure.Interfaces;
 
 namespace WebStore.Infrastructure.Services.InMemory
 {
-    public class InMemoryAccountDataService : IRepo<Account>
+    public class InMemoryAccountDataService : IRepo<User>
     {
-        public IEnumerable<Account> GetAll() => TestData.Accounts;
-        public Account GetById(int id) => TestData.Accounts.FirstOrDefault(x => x.Id == id);
+        public IEnumerable<User> GetAll() => TestData.Accounts;
+        public User GetById(int id) => TestData.Accounts.FirstOrDefault(x => x.Id == id);
 
-        public int Add(Account entity)
+        public int Add(User entity)
         {
             throw new System.NotImplementedException();
         }
@@ -22,7 +22,7 @@ namespace WebStore.Infrastructure.Services.InMemory
             throw new System.NotImplementedException();
         }
 
-        public void Edit(Account entity)
+        public void Edit(User entity)
         {
             throw new System.NotImplementedException();
         }

@@ -1,13 +1,13 @@
-﻿@model AccountViewModel
+﻿@model EmployeeViewModel
 @{
-    ViewBag.Title = $"Edit user id : {Model.Id}";
+    ViewBag.Title = $"Edit employee id : {Model.Id}";
 }
 
 <div class="container">
     <h3>@ViewBag.Title</h3>
     <hr />
 
-    <form asp-controller="Accounts" asp-action="Edit" method="post">
+    <form asp-controller="Employees" asp-action="Edit" method="post">
         <div class="row">
             <div class="col-md-4">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>

@@ -1,6 +1,6 @@
-﻿@model AccountViewModel
+﻿@model EmployeeViewModel
 @{ 
-    ViewBag.Title = $"User {Model.Id}";
+    ViewBag.Title = $"Employee {Model.Id}";
 }
 
 <div class="container">
@@ -14,5 +14,5 @@
     <p>Sex: @Model.Sex</p>
     <p>Birthday: @Model.Birthday.ToShortDateString()</p>
     <hr />
-    <a asp-controller="Accounts" asp-action="Index">Back to list</a>
+    <a asp-action="Index">Back to list</a>
 </div>
