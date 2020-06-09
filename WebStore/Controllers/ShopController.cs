@@ -26,7 +26,7 @@ namespace WebStore.Controllers
 
             return View(new CatalogViewModel
             {
-                Products = products.Take(6).Select(p => mapper.Map<ProductViewModel>(p)).OrderBy(p => p.Order)
+                Products = products.Take(6).Select(mapper.Map<ProductViewModel>).OrderBy(p => p.Order)
             });
         }
 
