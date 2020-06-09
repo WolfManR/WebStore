@@ -11,6 +11,6 @@ namespace WebStore.DAL.Context
         public DbSet<Product> Products { get; set; }
         public DbSet<Section> Sections { get; set; }
         public DbSet<Brand> Brands { get; set; }
-        public DbSet<User> Accounts { get; set; }
+        public DbSet<Employee> Employees { get; set; }
     }
 }
