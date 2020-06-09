@@ -70,7 +70,7 @@ namespace WebStore.Controllers
         }
 
         [HttpPost]
-        public IActionResult Edit(UserViewModel model)
+        public IActionResult Edit(EmployeeViewModel model)
         {
             _ = model ?? throw new ArgumentNullException(nameof(model));
 
