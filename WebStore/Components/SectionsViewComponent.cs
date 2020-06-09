@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+
+using Microsoft.AspNetCore.Mvc;
 
 using System.Collections.Generic;
 using System.Linq;
@@ -11,9 +13,12 @@ namespace WebStore.Components
     public class SectionsViewComponent : ViewComponent
     {
         private readonly IProductDataService productDataService;
-        public SectionsViewComponent(IProductDataService productDataService)
+        private readonly IMapper mapper;
+
+        public SectionsViewComponent(IProductDataService productDataService, IMapper mapper)
         {
             this.productDataService = productDataService;
+            this.mapper = mapper;
         }
 
         public IViewComponentResult Invoke() => View(GetSections());
@@ -24,27 +29,14 @@ namespace WebStore.Components
 
             var parent_sections = sections.Where(s => s.ParentId is null);
 
-            var parent_Sections_views = parent_sections.Select(
-                s => new SectionViewModel
-                {
-                    Id = s.Id,
-                    Name = s.Name,
-                    Order = s.Order,
-                })
-               .ToList();
+            var parent_Sections_views = parent_sections.Select(mapper.Map<SectionViewModel>).ToList();
 
             foreach (var parent_section in parent_Sections_views)
             {
                 var childs = sections.Where(s => s.ParentId == parent_section.Id);
 
                 foreach (var child_section in childs)
-                    parent_section.ChildSections.Add(new SectionViewModel
-                    {
-                        Id = child_section.Id,
-                        Name = child_section.Name,
-                        Order = child_section.Order,
-                        ParentSection = parent_section
-                    });
+                    parent_section.ChildSections.Add(mapper.Map<SectionViewModel>(child_section));
 
                 parent_section.ChildSections.Sort((a, b) => Comparer<double>.Default.Compare(a.Order, b.Order));
             }

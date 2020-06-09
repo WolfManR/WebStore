@@ -5,6 +5,7 @@ using System.Linq;
 
 using WebStore.Domain.Entities;
 using WebStore.Infrastructure.Interfaces;
+using WebStore.Infrastructure.Services.InMemory;
 using WebStore.ViewModels;
 
 namespace WebStore.Controllers
@@ -13,9 +14,9 @@ namespace WebStore.Controllers
     {
         private readonly IRepo<Account> repoAccount;
         private readonly IRepo<BlogPost> repoBlogPost;
-        public BlogController(IRepo<Account> repoAccount, IRepo<BlogPost> repoBlogPost)
+        public BlogController(IRepo<BlogPost> repoBlogPost)
         {
-            this.repoAccount = repoAccount;
+            this.repoAccount = new InMemoryAccountDataService();
             this.repoBlogPost = repoBlogPost;
         }
         public IActionResult BlogList()
@@ -28,7 +29,7 @@ namespace WebStore.Controllers
                 shortViews.Add(new BlogPostShortInfoViewModel
                 {
                     Id = item.Id,
-                    Author=new AccountViewModel {Id=author.Id,AvatarUrl=author.AvatarUrl,Firstname=author.FirstName,Surname=author.Surname },
+                    Author=new AccountViewModel {Id=author.Id,AvatarUrl=author.AvatarUrl,Firstname=author.Firstname,Surname=author.Surname },
                     MainImageUrl = item.MainImageUrl,
                     Subject = item.Subject,
                     RegistrationTime = item.RegistrationTime,
@@ -55,7 +56,7 @@ namespace WebStore.Controllers
                 comments_views.Add(new CommentViewModel
                 {
                     Id = item.Id,
-                    Account = new AccountViewModel { Id = account.Id, AvatarUrl = account.AvatarUrl, Firstname = account.FirstName, Surname = account.Surname },
+                    Account = new AccountViewModel { Id = account.Id, AvatarUrl = account.AvatarUrl, Firstname = account.Firstname, Surname = account.Surname },
                     Text = item.Text,
                     Time = item.Time,
                     ParentCommentId=item.ParentCommentId
@@ -79,7 +80,7 @@ namespace WebStore.Controllers
             return View(new BlogPostViewModel
             {
                 Id = post.Id,
-                Author = new AccountViewModel { Id = author.Id, AvatarUrl = author.AvatarUrl, Firstname = author.FirstName, Surname = author.Surname },
+                Author = new AccountViewModel { Id = author.Id, AvatarUrl = author.AvatarUrl, Firstname = author.Firstname, Surname = author.Surname },
                 MainImageUrl = post.MainImageUrl,
                 RegistrationTime = post.RegistrationTime,
                 Subject = post.Subject,

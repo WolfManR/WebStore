@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+
+using Microsoft.AspNetCore.Mvc;
 
 using System.Collections.Generic;
 using System.Linq;
@@ -11,20 +13,18 @@ namespace WebStore.Components
     public class BrandsViewComponent : ViewComponent
     {
         private readonly IProductDataService productDataService;
-        public BrandsViewComponent(IProductDataService productDataService)
+        private readonly IMapper mapper;
+
+        public BrandsViewComponent(IProductDataService productDataService, IMapper mapper)
         {
             this.productDataService = productDataService;
+            this.mapper = mapper;
         }
 
         public IViewComponentResult Invoke() => View(GetBrands());
 
         private IEnumerable<BrandViewModel> GetBrands() => productDataService.GetBrands()
-               .Select(brand => new BrandViewModel
-               {
-                   Id = brand.Id,
-                   Name = brand.Name,
-                   Order = brand.Order
-               })
+               .Select(mapper.Map<BrandViewModel>)
                .OrderBy(brand => brand.Order);
     }
 }

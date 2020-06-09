@@ -1,0 +1,61 @@
+﻿@model AccountViewModel
+@{
+    ViewBag.Title = $"Edit user id : {Model.Id}";
+}
+
+<div class="container">
+    <h3>@ViewBag.Title</h3>
+    <hr />
+
+    <form asp-controller="Accounts" asp-action="Edit" method="post">
+        <div class="row">
+            <div class="col-md-4">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <input asp-for="Id" type="hidden" />
+
+                <div class="form-group">
+                    <label asp-for="Firstname" class="control-label"></label>
+                    <input asp-for="Firstname" class="form-control" />
+                    <span asp-validation-for="Firstname" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Surname" class="control-label"></label>
+                    <input asp-for="Surname" class="form-control" />
+                    <span asp-validation-for="Surname" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="AvatarUrl" class="control-label">Avatar</label>
+                    <select asp-for="AvatarUrl" asp-items="@ViewBag.Avatars"></select>
+                    <span asp-validation-for="AvatarUrl" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Age" class="control-label"></label>
+                    <input asp-for="Age" class="form-control" />
+                    <span asp-validation-for="Age" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Sex" class="control-label"></label>
+                    <select asp-for="Sex" asp-items="@Html.GetEnumSelectList<WebStore.Domain.Sex>()"></select>
+                    <span asp-validation-for="Sex" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Birthday" class="control-label"></label>
+                    <input asp-for="Birthday" type="date" value="@DateTime.Now" class="form-control datepicker">
+                    <span asp-validation-for="Birthday" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" value="Save" class="btn btn-default" />
+                    <a asp-action="Index">Back to list</a>
+                </div>
+            </div>
+        </div>
+    </form>
+
+</div><br />
