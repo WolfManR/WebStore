@@ -58,11 +58,11 @@ namespace WebStore.Data
             if (!db.Employees.Any())
             {
                 using var transaction = DB.BeginTransaction();
-                db.Employees.AddRange(TestData.Accounts);
+                db.Employees.AddRange(TestData.Employees);
 
-                DB.ExecuteSqlRaw("SET IDENTITY_INSERT [dbo].[Accounts] ON");
+                DB.ExecuteSqlRaw("SET IDENTITY_INSERT [dbo].[Employees] ON");
                 db.SaveChanges();
-                DB.ExecuteSqlRaw("SET IDENTITY_INSERT [dbo].[Accounts] OFF");
+                DB.ExecuteSqlRaw("SET IDENTITY_INSERT [dbo].[Employees] OFF");
 
                 transaction.Commit();
             }
