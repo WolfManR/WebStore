@@ -20,7 +20,7 @@ namespace WebStore.Infrastructure.Services.InSQL
             _ = entity ?? throw new ArgumentNullException(nameof(entity));
             if(entity.Id!=0) throw new InvalidOperationException("The primary key is manually set for the employee to be added.");
 
-            db.Accounts.Add(entity);
+            db.Employees.Add(entity);
             return entity.Id;
         }
 
@@ -29,7 +29,7 @@ namespace WebStore.Infrastructure.Services.InSQL
             var db_item = GetById(id);
             if (db_item is null) return false;
 
-            db.Accounts.Remove(db_item);
+            db.Employees.Remove(db_item);
             return true;
         }
 
@@ -37,12 +37,12 @@ namespace WebStore.Infrastructure.Services.InSQL
         {
             _ = entity ?? throw new ArgumentNullException(nameof(entity));
 
-            db.Accounts.Update(entity);
+            db.Employees.Update(entity);
         }
 
-        public IEnumerable<User> GetAll() => db.Accounts;
+        public IEnumerable<User> GetAll() => db.Employees;
 
-        public User GetById(int id) => db.Accounts.FirstOrDefault(e => e.Id == id);
+        public User GetById(int id) => db.Employees.FirstOrDefault(e => e.Id == id);
 
         public void SaveChanges()
         {

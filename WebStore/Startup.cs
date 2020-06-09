@@ -31,7 +31,7 @@ namespace WebStore
             services.AddDbContext<WebStoreDB>(opt => opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddTransient<WebStoreDBInitializer>();
 
-            services.AddAutoMapper(typeof(UserProfile),typeof(ShopProfile));
+            services.AddAutoMapper(typeof(EmployeeProfile),typeof(ShopProfile));
 
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
