@@ -12,18 +12,18 @@ using WebStore.ViewModels;
 
 namespace WebStore.Controllers
 {
-    public class AccountsController : Controller
+    public class EmployeesController : Controller
     {
         #region Fields
 
-        private readonly IRepo<User> dataService;
+        private readonly IRepo<Employee> dataService;
         private readonly IMapper mapper;
         #endregion
 
 
         #region CTORs
 
-        public AccountsController(IRepo<User> dataService, IMapper mapper)
+        public EmployeesController(IRepo<Employee> dataService, IMapper mapper)
         {
             this.dataService = dataService;
             this.mapper = mapper;
@@ -33,20 +33,20 @@ namespace WebStore.Controllers
 
         #region Main Presenters
 
-        public IActionResult Index() => View(dataService.GetAll().Select(account => new UserViewModel
+        public IActionResult Index() => View(dataService.GetAll().Select(employee => new EmployeeViewModel
         {
-            Id = account.Id,
-            Surname = account.Surname,
-            Firstname = account.Firstname,
-            Age = account.Age
+            Id = employee.Id,
+            Surname = employee.Surname,
+            Firstname = employee.Firstname,
+            Age = employee.Age
         }));
 
         public IActionResult Details(int id)
         {
-            var account = dataService.GetById(id);
+            var employee = dataService.GetById(id);
 
-            if (account is null) return NotFound();
-            return View(mapper.Map<UserViewModel>(account));
+            if (employee is null) return NotFound();
+            return View(mapper.Map<EmployeeViewModel>(employee));
         }
         #endregion
 
@@ -58,15 +58,15 @@ namespace WebStore.Controllers
         public IActionResult Edit(int? Id)
         {
             ViewBag.Avatars = new SelectList(new[] { "man-one.jpg", "man-two.jpg", "man-three.jpg", "man-four.jpg" });
-            if (Id is null) return View(new UserViewModel());
+            if (Id is null) return View(new EmployeeViewModel());
 
             if (Id < 0) return BadRequest();
 
-            var account = dataService.GetById((int)Id);
-            if (account is null) return NotFound();
+            var employee = dataService.GetById((int)Id);
+            if (employee is null) return NotFound();
 
 
-            return View(mapper.Map<UserViewModel>(account));
+            return View(mapper.Map<EmployeeViewModel>(employee));
         }
 
         [HttpPost]
@@ -76,10 +76,10 @@ namespace WebStore.Controllers
 
             if (!ModelState.IsValid) return View(model);
 
-            var account = mapper.Map<User>(model);
+            var employee = mapper.Map<Employee>(model);
 
-            if (model.Id == 0) dataService.Add(account);
-            else dataService.Edit(account);
+            if (model.Id == 0) dataService.Add(employee);
+            else dataService.Edit(employee);
 
             try
             {
@@ -103,15 +103,15 @@ namespace WebStore.Controllers
             _ = id ?? throw new ArgumentNullException(nameof(id));
             if (id <= 0) return BadRequest();
 
-            var account = dataService.GetById((int)id);
-            if (account is null) return NotFound();
+            var employee = dataService.GetById((int)id);
+            if (employee is null) return NotFound();
 
-            return View(new UserViewModel
+            return View(new EmployeeViewModel
             {
-                Id = account.Id,
-                Surname = account.Surname,
-                Firstname = account.Firstname,
-                Age = account.Age
+                Id = employee.Id,
+                Surname = employee.Surname,
+                Firstname = employee.Firstname,
+                Age = employee.Age
             });
         }
 
