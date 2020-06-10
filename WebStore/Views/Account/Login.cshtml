@@ -1,5 +1,5 @@
 ﻿@model LoginViewModel
-@{ 
+@{
     ViewBag.Title = "Login";
 }
 <section id="form">
@@ -13,13 +13,19 @@
                     <form asp-action="Login" asp-antiforgery="true" method="post">
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-                        @Html.HiddenFor(model => model.ReturnUrl)
+                        <input asp-for="ReturnUrl" type="hidden" />
 
-                        <input asp-for="UserName"/>
-                        <span asp-validation-for="UserName" class="text-danger"></span>
+                        <div class="form-group">
+                            <label asp-for="UserName" class="control-label"></label>
+                            <input asp-for="UserName" class="form-control" />
+                            <span asp-validation-for="UserName" class="text-danger"></span>
+                        </div>
 
-                        <input asp-for="Password"/>
-                        <span asp-validation-for="Password" class="text-danger"></span>
+                        <div class="form-group">
+                            <label asp-for="Password" class="control-label"></label>
+                            <input asp-for="Password" type="password" class="form-control" />
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
 
                         <span>
                             <input asp-for="RememberMe" class="checkbox">
