@@ -6,7 +6,7 @@ using System.Linq;
 
 using WebStore.Domain.Entities;
 using WebStore.Infrastructure.Interfaces;
-using WebStore.ViewModels;
+using WebStore.ViewModels.Products;
 
 namespace WebStore.Controllers
 {

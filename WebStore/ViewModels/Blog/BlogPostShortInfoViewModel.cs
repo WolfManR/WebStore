@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace WebStore.ViewModels
+namespace WebStore.ViewModels.Blog
 {
     public class BlogPostShortInfoViewModel
     {
