@@ -86,14 +86,15 @@ namespace WebStore
                 app.UseDeveloperExceptionPage();
                 app.UseBrowserLink();
             }
-
+            app.UseStatusCodePagesWithReExecute("/Error/{0}");
             // needed for work MVC
             app.UseStaticFiles();
             app.UseDefaultFiles();
 
-            app.UseAuthentication();
-
             app.UseRouting();
+
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
