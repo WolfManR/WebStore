@@ -7,6 +7,7 @@ using System;
 using System.Linq;
 
 using WebStore.Domain.Entities;
+using WebStore.Domain.Entities.Identity;
 using WebStore.Infrastructure.Interfaces;
 using WebStore.ViewModels;
 
@@ -33,6 +34,7 @@ namespace WebStore.Controllers
 
 
         #region Main Presenters
+
         [AllowAnonymous]
         public IActionResult Index() => View(dataService.GetAll().Select(employee => new EmployeeViewModel
         {
@@ -41,7 +43,8 @@ namespace WebStore.Controllers
             Firstname = employee.Firstname,
             Age = employee.Age
         }));
-        
+
+        [Authorize(Roles = Role.User)]
         public IActionResult Details(int id)
         {
             var employee = dataService.GetById(id);
@@ -55,7 +58,8 @@ namespace WebStore.Controllers
         #region CRUD
 
         #region Редактирование
-        
+
+        [Authorize(Roles = Role.Administrator)]
         public IActionResult Edit(int? Id)
         {
             ViewBag.Avatars = new SelectList(new[] { "man-one.jpg", "man-two.jpg", "man-three.jpg", "man-four.jpg" });
@@ -71,6 +75,7 @@ namespace WebStore.Controllers
         }
         
         [HttpPost]
+        [Authorize(Roles = Role.Administrator)]
         public IActionResult Edit(EmployeeViewModel model)
         {
             _ = model ?? throw new ArgumentNullException(nameof(model));
@@ -98,7 +103,8 @@ namespace WebStore.Controllers
 
 
         #region Удаление
-        
+
+        [Authorize(Roles = Role.Administrator)]
         public IActionResult Delete(int? id)
         {
             _ = id ?? throw new ArgumentNullException(nameof(id));
@@ -117,6 +123,7 @@ namespace WebStore.Controllers
         }
         
         [HttpPost]
+        [Authorize(Roles = Role.Administrator)]
         public IActionResult Delete(int id)
         {
             dataService.Delete(id);
