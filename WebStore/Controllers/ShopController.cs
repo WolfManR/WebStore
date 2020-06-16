@@ -58,6 +58,5 @@ namespace WebStore.Controllers
         }
 
         public IActionResult Checkout() => View();
-        public IActionResult Cart() => View();
     }
 }

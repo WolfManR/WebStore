@@ -16,6 +16,7 @@ using WebStore.Domain.Entities;
 using WebStore.Domain.Entities.Identity;
 using WebStore.Infrastructure.Interfaces;
 using WebStore.Infrastructure.Profiles;
+using WebStore.Infrastructure.Services.InCookies;
 using WebStore.Infrastructure.Services.InMemory;
 using WebStore.Infrastructure.Services.InSQL;
 using WebStore.Infrastructure.Services.InSQL.Base;
@@ -75,6 +76,7 @@ namespace WebStore
             services.AddScoped<IRepo<Employee>, BaseRepo<Employee>>();
             services.AddScoped<IProductDataService, SqlProductDataService>();
             services.AddSingleton<IRepo<BlogPost>, InMemoryBlogDataService>();
+            services.AddScoped<ICartDataService, CookiesCartDataService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, WebStoreDBInitializer db)
