@@ -1,4 +1,5 @@
-﻿using WebStore.Domain.Entities.Base.Interfaces;
+﻿using WebStore.Domain.Entities;
+using WebStore.Domain.Entities.Base.Interfaces;
 
 namespace WebStore.ViewModels.Products
 {
@@ -10,5 +11,8 @@ namespace WebStore.ViewModels.Products
 
         public string ImageUrl { get; set; }
         public decimal Price { get; set; }
+
+        public BrandViewModel Brand { get; set; }
+        public SectionViewModel Section { get; set; }
     }
 }
