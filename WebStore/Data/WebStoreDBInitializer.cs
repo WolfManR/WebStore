@@ -1,8 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 
 using WebStore.DAL.Context;
+using WebStore.Domain.Entities.Base;
+using WebStore.Infrastructure.Extensions;
 
 namespace WebStore.Data
 {
@@ -17,55 +21,30 @@ namespace WebStore.Data
             var DB = db.Database;
             DB.Migrate();
 
-            if (!db.Sections.Any())
-            {
-                using (DB.BeginTransaction())
-                {
-                    db.Sections.AddRange(TestData.Sections);
+            
+            TableInitWiaTransaction(db, TestData.Sections);
+            
+            TableInitWiaTransaction(db, TestData.Brands);
 
-                    DB.ExecuteSqlRaw("SET IDENTITY_INSERT [dbo].[ProductSection] ON");
-                    db.SaveChanges();
-                    DB.ExecuteSqlRaw("SET IDENTITY_INSERT [dbo].[ProductSection] OFF");
+            TableInitWiaTransaction(db, TestData.Products);
 
-                    DB.CommitTransaction();
-                }
-            }
+            TableInitWiaTransaction(db, TestData.Employees);
+        }
 
-            if (!db.Brands.Any())
-            {
-                using var transaction = DB.BeginTransaction();
-                db.Brands.AddRange(TestData.Brands);
+        void TableInitWiaTransaction<T>(DbContext context, IEnumerable<T> data) where T : BaseEntity
+        {
+            var table = context.Set<T>();
+            if (table.Any()) return;
 
-                DB.ExecuteSqlRaw("SET IDENTITY_INSERT [dbo].[ProductBrand] ON");
-                db.SaveChanges();
-                DB.ExecuteSqlRaw("SET IDENTITY_INSERT [dbo].[ProductBrand] OFF");
+            var DB = context.Database;
+            data.ForEach(t => t.Id = 0);
 
-                transaction.Commit();
-            }
+            using var transaction = DB.BeginTransaction();
+            table.AddRange(data);
 
-            if (!db.Products.Any())
-            {
-                using var transaction = DB.BeginTransaction();
-                db.Products.AddRange(TestData.Products);
+            db.SaveChanges();
 
-                DB.ExecuteSqlRaw("SET IDENTITY_INSERT [dbo].[Products] ON");
-                db.SaveChanges();
-                DB.ExecuteSqlRaw("SET IDENTITY_INSERT [dbo].[Products] OFF");
-
-                transaction.Commit();
-            }
-
-            if (!db.Employees.Any())
-            {
-                using var transaction = DB.BeginTransaction();
-                db.Employees.AddRange(TestData.Employees);
-
-                DB.ExecuteSqlRaw("SET IDENTITY_INSERT [dbo].[Employees] ON");
-                db.SaveChanges();
-                DB.ExecuteSqlRaw("SET IDENTITY_INSERT [dbo].[Employees] OFF");
-
-                transaction.Commit();
-            }
+            transaction.Commit();
         }
     }
 }
