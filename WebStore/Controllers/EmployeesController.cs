@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -12,6 +12,7 @@ using WebStore.ViewModels;
 
 namespace WebStore.Controllers
 {
+    [Authorize]
     public class EmployeesController : Controller
     {
         #region Fields
@@ -32,7 +33,7 @@ namespace WebStore.Controllers
 
 
         #region Main Presenters
-
+        [AllowAnonymous]
         public IActionResult Index() => View(dataService.GetAll().Select(employee => new EmployeeViewModel
         {
             Id = employee.Id,
@@ -40,7 +41,7 @@ namespace WebStore.Controllers
             Firstname = employee.Firstname,
             Age = employee.Age
         }));
-
+        
         public IActionResult Details(int id)
         {
             var employee = dataService.GetById(id);
@@ -54,7 +55,7 @@ namespace WebStore.Controllers
         #region CRUD
 
         #region Редактирование
-
+        
         public IActionResult Edit(int? Id)
         {
             ViewBag.Avatars = new SelectList(new[] { "man-one.jpg", "man-two.jpg", "man-three.jpg", "man-four.jpg" });
@@ -68,7 +69,7 @@ namespace WebStore.Controllers
 
             return View(mapper.Map<EmployeeViewModel>(employee));
         }
-
+        
         [HttpPost]
         public IActionResult Edit(EmployeeViewModel model)
         {
@@ -97,7 +98,7 @@ namespace WebStore.Controllers
 
 
         #region Удаление
-
+        
         public IActionResult Delete(int? id)
         {
             _ = id ?? throw new ArgumentNullException(nameof(id));
@@ -114,7 +115,7 @@ namespace WebStore.Controllers
                 Age = employee.Age
             });
         }
-
+        
         [HttpPost]
         public IActionResult Delete(int id)
         {

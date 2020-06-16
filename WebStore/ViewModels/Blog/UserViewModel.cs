@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 using WebStore.Domain;
 
-namespace WebStore.ViewModels
+namespace WebStore.ViewModels.Blog
 {
     public class UserViewModel
     {
@@ -20,7 +20,7 @@ namespace WebStore.ViewModels
 
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "Age not specified, required")]
-        [Range(18,75)]
+        [Range(18, 75)]
         public int Age { get; set; }
 
         public Sex Sex { get; set; }

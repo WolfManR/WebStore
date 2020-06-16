@@ -9,8 +9,8 @@ namespace WebStore.Infrastructure.Profiles
     {
         public EmployeeProfile()
         {
-            CreateMap<Employee, EmployeeViewModel>();
-            CreateMap<Employee, EmployeeViewModel>().ReverseMap();
+            CreateMap<Employee, EmployeeViewModel>().ForMember(dest=>dest.Birthday,opt=>opt.MapFrom(src=>src.BirthdayDate));
+            CreateMap<Employee, EmployeeViewModel>().ForMember(dest => dest.Birthday, opt => opt.MapFrom(src => src.BirthdayDate)).ReverseMap();
         }
     }
 }

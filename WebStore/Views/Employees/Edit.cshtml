@@ -46,7 +46,14 @@
 
                 <div class="form-group">
                     <label asp-for="Birthday" class="control-label"></label>
-                    <input asp-for="Birthday" type="date" value="@DateTime.Now" class="form-control datepicker">
+                    @if (Equals(Model.Birthday, new DateTime()))
+                    {
+                        <input asp-for="Birthday" type="date" value="@DateTime.Now.ToString("yyyy-MM-dd")" class="form-control datepicker">
+                    }
+                    else
+                    {
+                        <input asp-for="Birthday" type="date" class="form-control datepicker">
+                    }
                     <span asp-validation-for="Birthday" class="text-danger"></span>
                 </div>
 
