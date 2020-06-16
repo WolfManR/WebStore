@@ -67,7 +67,7 @@ namespace WebStore.Data
             if (!await roleManager.RoleExistsAsync(Role.User))
                 await roleManager.CreateAsync(new Role { Name = Role.User });
 
-            if (await roleManager.FindByNameAsync(User.Administrator) is null)
+            if (await userManager.FindByNameAsync(User.Administrator) is null)
             {
                 var admin = new User { UserName = User.Administrator };
 
