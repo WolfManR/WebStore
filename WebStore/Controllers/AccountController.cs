@@ -4,20 +4,22 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
+using WebStore.Domain.Entities.Identity;
 using WebStore.ViewModels.Identity;
 
 namespace WebStore.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly UserManager<Domain.Entities.Identity.User> userManager;
-        private readonly SignInManager<Domain.Entities.Identity.User> signInManager;
+        private readonly UserManager<User> userManager;
+        private readonly SignInManager<User> signInManager;
 
-        public AccountController(UserManager<Domain.Entities.Identity.User> userManager, SignInManager<Domain.Entities.Identity.User> signInManager)
+        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
         }
+
 
         #region Register
 
@@ -28,11 +30,13 @@ namespace WebStore.Controllers
         {
             if (!ModelState.IsValid) return View(model);
 
-            var user = new Domain.Entities.Identity.User { UserName = model.UserName };
+            var user = new User { UserName = model.UserName };
 
             var registration_result = await userManager.CreateAsync(user, model.Password);
             if (registration_result.Succeeded)
             {
+                await userManager.AddToRoleAsync(user, Role.User);
+
                 await signInManager.SignInAsync(user, false);
                 return RedirectToAction("Home", "Shop");
             }
@@ -45,6 +49,7 @@ namespace WebStore.Controllers
             return View(model);
         }
         #endregion
+
 
         #region Login
 
@@ -68,6 +73,8 @@ namespace WebStore.Controllers
             return View(model);
         }
         #endregion
+
+
         [Authorize]
         public async Task<IActionResult> Logout()
         {
