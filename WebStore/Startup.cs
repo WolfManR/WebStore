@@ -86,7 +86,7 @@ namespace WebStore
                 app.UseDeveloperExceptionPage();
                 app.UseBrowserLink();
             }
-            app.UseStatusCodePagesWithReExecute("/Error/{0}");
+            app.UseStatusCodePagesWithReExecute("/Errors/{0}");
             // needed for work MVC
             app.UseStaticFiles();
             app.UseDefaultFiles();
