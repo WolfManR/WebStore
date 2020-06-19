@@ -48,8 +48,15 @@ namespace WebStore.Controllers
             });
         }
 
-        public IActionResult ProductDetails() => View();
+        public IActionResult ProductDetails(int id)
+        {
+            if (id == 0) return BadRequest();
+
+            var product = productDataService.GetProductById(id);
+            if (product is null) return NotFound();
+            return View(mapper.Map<ProductViewModel>(product));
+        }
+
         public IActionResult Checkout() => View();
-        public IActionResult Cart() => View();
     }
 }
