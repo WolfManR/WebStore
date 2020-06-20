@@ -1,12 +1,11 @@
 ﻿<div class="shop-menu pull-right">
     <ul class="nav navbar-nav">
         <li><a asp-controller="Employees" asp-action="Index">Employees</a></li>
-        <li><a asp-controller="Shop" asp-action="Checkout"><i class="fa fa-crosshairs"></i> Checkout</a></li>
         <li><a asp-controller="Cart" asp-action="Details"><i class="fa fa-shopping-cart"></i> Cart</a></li>
         <li class="dropdown">
             <a href="#">UserName<i class="fa fa-angle-down"></i></a>
             <ul role="menu" class="sub-menu">
-                <li style="display:list-item;"><a href="#" style="background:unset;"><i class="fa fa-user"></i> Account</a></li>
+                <li style="display:list-item;"><a asp-controller="UserProfile" asp-action="Index" style="background:unset;"><i class="fa fa-user"></i> Account</a></li>
                 <li style="display:list-item;"><a href="#" style="background:unset;"><i class="fa fa-star"></i> Wishlist</a></li>
                 <li><a asp-controller="Account" asp-action="Logout" style="background:unset;"><i class="fa fa-lock"></i> Logout</a></li>
             </ul>
