@@ -77,6 +77,7 @@ namespace WebStore
             services.AddScoped<IProductDataService, SqlProductDataService>();
             services.AddSingleton<IRepo<BlogPost>, InMemoryBlogDataService>();
             services.AddScoped<ICartDataService, CookiesCartDataService>();
+            services.AddScoped<IOrderDataService, SqlOrderDataService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, WebStoreDBInitializer db)
