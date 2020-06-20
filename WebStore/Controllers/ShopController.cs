@@ -56,7 +56,5 @@ namespace WebStore.Controllers
             if (product is null) return NotFound();
             return View(mapper.Map<ProductViewModel>(product));
         }
-
-        public IActionResult Checkout() => View();
     }
 }
