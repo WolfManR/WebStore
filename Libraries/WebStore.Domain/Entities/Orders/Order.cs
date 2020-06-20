@@ -9,7 +9,7 @@ namespace WebStore.Domain.Entities.Orders
     public class Order : NamedEntity
     {
         [Required]
-        public virtual User User { get; set; }
+        public virtual Identity.User User { get; set; }
         public string Phone { get; set; }
         public string Address { get; set; }
         public DateTime Date { get; set; }
