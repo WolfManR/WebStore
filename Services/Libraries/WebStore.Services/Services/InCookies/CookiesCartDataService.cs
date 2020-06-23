@@ -1,17 +1,13 @@
-﻿using AutoMapper;
-
+﻿using System.Linq;
+using AutoMapper;
 using Microsoft.AspNetCore.Http;
-
 using Newtonsoft.Json;
-
-using System.Linq;
-
 using WebStore.Domain.Entities;
 using WebStore.Domain.Models;
 using WebStore.Domain.ViewModels.Products;
 using WebStore.Interfaces.Services;
 
-namespace WebStore.Infrastructure.Services.InCookies
+namespace WebStore.Services.Services.InCookies
 {
     public class CookiesCartDataService : ICartDataService
     {
@@ -26,8 +22,8 @@ namespace WebStore.Infrastructure.Services.InCookies
             accessor = httpContextAccessor;
             this.mapper = mapper;
             var user = httpContextAccessor.HttpContext.User;
-            var user_name = user.Identity.IsAuthenticated ? user.Identity.Name : null;
-            cartName = $"WebStore.Cart[{user_name}]";
+            var userName = user.Identity.IsAuthenticated ? user.Identity.Name : null;
+            cartName = $"WebStore.Cart[{userName}]";
         }
 
         public Cart Cart
@@ -36,16 +32,16 @@ namespace WebStore.Infrastructure.Services.InCookies
             {
                 var context = accessor.HttpContext;
                 var cookies = context.Response.Cookies;
-                var cart_cookie = context.Request.Cookies[cartName];
-                if (cart_cookie is null)
+                var cartCookie = context.Request.Cookies[cartName];
+                if (cartCookie is null)
                 {
                     var cart = new Cart();
                     cookies.Append(cartName, JsonConvert.SerializeObject(cart));
                     return cart;
                 }
 
-                ReplaceCookie(cookies, cart_cookie);
-                return JsonConvert.DeserializeObject<Cart>(cart_cookie);
+                ReplaceCookie(cookies, cartCookie);
+                return JsonConvert.DeserializeObject<Cart>(cartCookie);
             }
             set => ReplaceCookie(accessor.HttpContext.Response.Cookies, JsonConvert.SerializeObject(value));
         }
@@ -107,11 +103,11 @@ namespace WebStore.Infrastructure.Services.InCookies
                 Ids = Cart.Items.Select(item => item.ProductId).ToArray()
             });
 
-            var product_view_models = products.Select(mapper.Map<ProductViewModel>).ToDictionary(p => p.Id);
+            var productViewModels = products.Select(mapper.Map<ProductViewModel>).ToDictionary(p => p.Id);
 
             return new CartViewModel
             {
-                Items = Cart.Items.Select(item => (product_view_models[item.ProductId], item.Quantity))
+                Items = Cart.Items.Select(item => (productViewModels[item.ProductId], item.Quantity))
             };
         } 
         #endregion

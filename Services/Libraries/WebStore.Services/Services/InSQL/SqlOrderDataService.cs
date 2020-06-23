@@ -13,7 +13,7 @@ using WebStore.Domain.ViewModels.Products;
 using WebStore.Domain.ViewModels.Products.Orders;
 using WebStore.Interfaces.Services;
 
-namespace WebStore.Infrastructure.Services.InSQL
+namespace WebStore.Services.Services.InSQL
 {
     public class SqlOrderDataService : IOrderDataService
     {
@@ -43,19 +43,19 @@ namespace WebStore.Infrastructure.Services.InSQL
                 Items = new List<OrderItem>()
             };
 
-            foreach (var (product_model, quantity) in cart.Items)
+            foreach (var (productModel, quantity) in cart.Items)
             {
-                var product = await db.Products.FindAsync(product_model.Id);
-                if (product is null) throw new InvalidOperationException($"Product id:{product_model.Id} not exist");
+                var product = await db.Products.FindAsync(productModel.Id);
+                if (product is null) throw new InvalidOperationException($"Product id:{productModel.Id} not exist");
 
-                var order_item = new OrderItem
+                var orderItem = new OrderItem
                 {
                     Order = order,
                     Price = product.Price,
                     Quantity = quantity,
                     Product = product
                 };
-                order.Items.Add(order_item);
+                order.Items.Add(orderItem);
             }
 
             await db.Orders.AddAsync(order);

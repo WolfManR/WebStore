@@ -5,7 +5,7 @@ using System.Linq;
 
 using WebStore.Domain.Entities;
 using WebStore.Domain.ViewModels.Blog;
-using WebStore.Infrastructure.Services.InMemory;
+using WebStore.Services.Services.InMemory;
 using WebStore.Interfaces.Services;
 
 namespace WebStore.Controllers
@@ -48,12 +48,12 @@ namespace WebStore.Controllers
             if (post is null) return NotFound();
 
             var comments = post.Comments;
-            List<CommentViewModel> comments_views = new List<CommentViewModel>();
+            List<CommentViewModel> commentsViews = new List<CommentViewModel>();
             foreach (var item in comments)
             {
                 var account = repoAccount.GetById(item.AccountId);
 
-                comments_views.Add(new CommentViewModel
+                commentsViews.Add(new CommentViewModel
                 {
                     Id = item.Id,
                     Account = new UserViewModel { Id = account.Id, AvatarUrl = account.AvatarUrl, Firstname = account.Firstname, Surname = account.Surname },
@@ -63,11 +63,11 @@ namespace WebStore.Controllers
                 });
             }
 
-            foreach (var view in comments_views)
+            foreach (var view in commentsViews)
             {
                 if (view.ParentCommentId is null) continue;
 
-                var childs = comments_views.Where(c => c.ParentCommentId == view.Id);
+                var childs = commentsViews.Where(c => c.ParentCommentId == view.Id);
                 foreach (var item in childs)
                 {
                     item.ParentComment = view;
@@ -75,7 +75,7 @@ namespace WebStore.Controllers
                 }
             }
 
-            var parent_comments = comments_views.Where(x => x.ParentCommentId is null);
+            var parentComments = commentsViews.Where(x => x.ParentCommentId is null);
             var author = repoAccount.GetById(post.AuthorAccountId);
             return View(new BlogPostViewModel
             {
@@ -86,7 +86,7 @@ namespace WebStore.Controllers
                 Subject = post.Subject,
                 Tags = post.Tags.ToList(),
                 Text = post.Text.ToList(),
-                Comments = parent_comments.ToList()
+                Comments = parentComments.ToList()
             });
         }
     }

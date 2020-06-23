@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 using WebStore.DAL.Context;
 using WebStore.Domain.Entities.Base;
 using WebStore.Domain.Entities.Identity;
-using WebStore.Infrastructure.Extensions;
+using WebStore.Services.Extensions;
 
-namespace WebStore.Data
+namespace WebStore.Services.Data
 {
     public class WebStoreDBInitializer
     {

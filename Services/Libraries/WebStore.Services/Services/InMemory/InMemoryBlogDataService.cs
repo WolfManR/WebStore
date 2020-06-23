@@ -1,18 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-using WebStore.Data;
 using WebStore.Domain.Entities;
 using WebStore.Interfaces.Services;
+using WebStore.Services.Data;
 
-namespace WebStore.Infrastructure.Services.InMemory
+namespace WebStore.Services.Services.InMemory
 {
-    public class InMemoryAccountDataService : IRepo<User>
+    public class InMemoryBlogDataService : IRepo<BlogPost>
     {
-        public IEnumerable<User> GetAll() => TestData.Accounts;
-        public User GetById(int id) => TestData.Accounts.FirstOrDefault(x => x.Id == id);
-
-        public int Add(User entity)
+        public int Add(BlogPost entity)
         {
             throw new System.NotImplementedException();
         }
@@ -22,10 +19,13 @@ namespace WebStore.Infrastructure.Services.InMemory
             throw new System.NotImplementedException();
         }
 
-        public void Edit(User entity)
+        public void Edit(BlogPost entity)
         {
             throw new System.NotImplementedException();
         }
+
+        public IEnumerable<BlogPost> GetAll() => TestData.BlogPosts;
+        public BlogPost GetById(int id) => TestData.BlogPosts.FirstOrDefault(x => x.Id == id);
 
         public void SaveChanges()
         {

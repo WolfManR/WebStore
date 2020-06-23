@@ -3,7 +3,7 @@
 using WebStore.Domain.Entities;
 using WebStore.Domain.ViewModels.Products;
 
-namespace WebStore.Infrastructure.Profiles
+namespace WebStore.Services.Profiles
 {
     public class ShopProfile : Profile
     {
