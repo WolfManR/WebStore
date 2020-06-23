@@ -1,4 +1,5 @@
-﻿@model IEnumerable<string>
+﻿@using Microsoft.EntityFrameworkCore.Internal
+@model IEnumerable<string>
 @{
     ViewBag.Title = "Test WebApi";
 }
@@ -7,7 +8,7 @@
     <ul>
         @foreach (var value in Model)
         {
-            <li>@value</li>
+            <li>@value | <a asp-action="Edit" asp-route-id="@Model.IndexOf(value)">Edit</a> | <a asp-action="Delete" asp-route-id="@Model.IndexOf(value)">Delete</a></li>
         }
     </ul>
 </div>
