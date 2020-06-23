@@ -11,7 +11,7 @@ using WebStore.Domain.Entities.Identity;
 using WebStore.Domain.Entities.Orders;
 using WebStore.Domain.ViewModels.Products;
 using WebStore.Domain.ViewModels.Products.Orders;
-using WebStore.Infrastructure.Interfaces;
+using WebStore.Interfaces.Services;
 
 namespace WebStore.Infrastructure.Services.InSQL
 {

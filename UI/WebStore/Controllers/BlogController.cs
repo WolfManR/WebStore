@@ -5,8 +5,8 @@ using System.Linq;
 
 using WebStore.Domain.Entities;
 using WebStore.Domain.ViewModels.Blog;
-using WebStore.Infrastructure.Interfaces;
 using WebStore.Infrastructure.Services.InMemory;
+using WebStore.Interfaces.Services;
 
 namespace WebStore.Controllers
 {

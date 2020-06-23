@@ -6,7 +6,7 @@ using System.Linq;
 
 using WebStore.DAL.Context;
 using WebStore.Domain.Entities.Base;
-using WebStore.Infrastructure.Interfaces;
+using WebStore.Interfaces.Services;
 
 namespace WebStore.Infrastructure.Services.InSQL.Base
 {

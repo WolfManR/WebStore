@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace WebStore.Interfaces.Interfaces
+namespace WebStore.Interfaces.Services
 {
     public interface IRepo<T>
     {
