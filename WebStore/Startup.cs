@@ -77,6 +77,7 @@ namespace WebStore
             services.AddScoped<IProductDataService, SqlProductDataService>();
             services.AddSingleton<IRepo<BlogPost>, InMemoryBlogDataService>();
             services.AddScoped<ICartDataService, CookiesCartDataService>();
+            services.AddScoped<IOrderDataService, SqlOrderDataService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, WebStoreDBInitializer db)
@@ -100,6 +101,11 @@ namespace WebStore
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapAreaControllerRoute(
+                        name: "areaAdmin",
+                        areaName: "Admin",
+                        pattern: "Admin/{controller=Home}/{action=Index}/{id?}"
+                    );
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Shop}/{action=Home}/{id?}");
