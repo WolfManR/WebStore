@@ -2,8 +2,8 @@
 
 using System.Threading.Tasks;
 
+using WebStore.Domain.ViewModels.Products.Orders;
 using WebStore.Infrastructure.Interfaces;
-using WebStore.ViewModels.Products.Orders;
 
 namespace WebStore.Controllers
 {

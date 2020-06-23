@@ -2,7 +2,7 @@
 
 using WebStore.Domain.Entities.Base.Interfaces;
 
-namespace WebStore.ViewModels.Products
+namespace WebStore.Domain.ViewModels.Products
 {
     public class SectionViewModel : INamedEntity, IOrderedEntity
     {

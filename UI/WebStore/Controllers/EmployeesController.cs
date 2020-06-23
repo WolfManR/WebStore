@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -8,8 +9,8 @@ using System.Linq;
 
 using WebStore.Domain.Entities;
 using WebStore.Domain.Entities.Identity;
+using WebStore.Domain.ViewModels;
 using WebStore.Infrastructure.Interfaces;
-using WebStore.ViewModels;
 
 namespace WebStore.Controllers
 {

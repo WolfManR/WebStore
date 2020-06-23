@@ -4,8 +4,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
+using WebStore.Domain.ViewModels.Products.Orders;
 using WebStore.Infrastructure.Interfaces;
-using WebStore.ViewModels.Products.Orders;
 
 namespace WebStore.Controllers
 {

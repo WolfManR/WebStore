@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 using WebStore.DAL.Context;
 using WebStore.Domain.Entities.Identity;
 using WebStore.Domain.Entities.Orders;
+using WebStore.Domain.ViewModels.Products;
+using WebStore.Domain.ViewModels.Products.Orders;
 using WebStore.Infrastructure.Interfaces;
-using WebStore.ViewModels.Products;
-using WebStore.ViewModels.Products.Orders;
 
 namespace WebStore.Infrastructure.Services.InSQL
 {

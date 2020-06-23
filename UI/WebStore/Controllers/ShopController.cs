@@ -5,8 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 
 using WebStore.Domain.Entities;
+using WebStore.Domain.ViewModels.Products;
 using WebStore.Infrastructure.Interfaces;
-using WebStore.ViewModels.Products;
 
 namespace WebStore.Controllers
 {

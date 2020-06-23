@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 
 using WebStore.Domain.Entities;
-using WebStore.ViewModels.Products;
+using WebStore.Domain.ViewModels.Products;
 
 namespace WebStore.Infrastructure.Profiles
 {

@@ -1,4 +1,4 @@
-﻿using WebStore.ViewModels.Products;
+﻿using WebStore.Domain.ViewModels.Products;
 
 namespace WebStore.Infrastructure.Interfaces
 {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace WebStore.ViewModels.Blog
+namespace WebStore.Domain.ViewModels.Blog
 {
     public class CommentViewModel
     {

@@ -1,11 +1,9 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-using WebStore.Domain;
-
-namespace WebStore.ViewModels
+namespace WebStore.Domain.ViewModels.Blog
 {
-    public class EmployeeViewModel
+    public class UserViewModel
     {
         public int Id { get; set; }
 
@@ -24,8 +22,6 @@ namespace WebStore.ViewModels
         public int Age { get; set; }
 
         public Sex Sex { get; set; }
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime Birthday { get; set; }
 
         public string Name { get => $"{Firstname} {Surname}"; }
