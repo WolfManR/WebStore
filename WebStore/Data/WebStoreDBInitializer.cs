@@ -32,31 +32,47 @@ namespace WebStore.Data
             DB.Migrate();
 
 
-            TableInitWiaTransaction(db, TestData.Sections);
+            TableInitWiaTransaction(db, TestData.Sections, true);
 
-            TableInitWiaTransaction(db, TestData.Brands);
+            TableInitWiaTransaction(db, TestData.Brands, true);
 
-            TableInitWiaTransaction(db, TestData.Products);
+            TableInitWiaTransaction(db, TestData.Products, true);
 
             TableInitWiaTransaction(db, TestData.Employees);
 
             InitializeIdentityAsync().Wait();
         }
 
-        void TableInitWiaTransaction<T>(DbContext context, IEnumerable<T> data) where T : BaseEntity
+        void TableInitWiaTransaction<T>(DbContext context, IEnumerable<T> data, bool isClearIds = false) where T : BaseEntity
         {
             var table = context.Set<T>();
             if (table.Any()) return;
 
             var DB = context.Database;
-            data.ForEach(t => t.Id = 0);
 
-            using var transaction = DB.BeginTransaction();
-            table.AddRange(data);
+            if (isClearIds)
+            {
+                var tableName = context.Model.FindEntityType(typeof(T)).GetTableName();
+                table.AddRange(data);
 
-            db.SaveChanges();
+                using var transaction = DB.BeginTransaction();
 
-            transaction.Commit();
+                DB.ExecuteSqlRaw($"SET IDENTITY_INSERT [dbo].[{tableName}] ON");
+                context.SaveChanges();
+                DB.ExecuteSqlRaw($"SET IDENTITY_INSERT [dbo].[{tableName}] OFF");
+
+                transaction.Commit();
+            }
+            else
+            {
+                data.ForEach(t => t.Id = 0);
+                table.AddRange(data);
+
+                using var transaction = DB.BeginTransaction();
+                db.SaveChanges();
+                transaction.Commit();
+            }
+            
         }
 
         async Task InitializeIdentityAsync()
