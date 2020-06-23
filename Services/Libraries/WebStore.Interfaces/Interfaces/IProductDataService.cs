@@ -2,7 +2,7 @@
 
 using WebStore.Domain.Entities;
 
-namespace WebStore.Infrastructure.Interfaces
+namespace WebStore.Interfaces.Interfaces
 {
     public interface IProductDataService
     {
