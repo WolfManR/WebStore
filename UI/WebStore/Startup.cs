@@ -10,10 +10,12 @@ using Microsoft.Extensions.Hosting;
 
 using System;
 
+using WebStore.Clients.Values;
 using WebStore.DAL.Context;
 using WebStore.Domain.Entities;
 using WebStore.Domain.Entities.Identity;
 using WebStore.Interfaces.Services;
+using WebStore.Interfaces.TestApi;
 using WebStore.Services.Data;
 using WebStore.Services.Profiles;
 using WebStore.Services.Services.InCookies;
@@ -78,6 +80,8 @@ namespace WebStore
             services.AddSingleton<IRepo<BlogPost>, InMemoryBlogDataService>();
             services.AddScoped<ICartDataService, CookiesCartDataService>();
             services.AddScoped<IOrderDataService, SqlOrderDataService>();
+
+            services.AddTransient<IValueService, ValuesClient>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, WebStoreDBInitializer db)
