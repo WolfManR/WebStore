@@ -25,9 +25,9 @@ namespace WebStore.Controllers
         }
 
         [HttpPost]
-        public IActionResult Edit(int id, string value)
+        public IActionResult Edit(int Item1, string Item2)
         {
-            return valueService.Update(id, value) switch
+            return valueService.Update(Item1, Item2) switch
             {
                 HttpStatusCode.OK => RedirectToAction(nameof(Index)),
                 _ => BadRequest()
