@@ -1,0 +1,14 @@
+﻿@using Microsoft.EntityFrameworkCore.Internal
+@model IEnumerable<string>
+@{
+    ViewBag.Title = "Test WebApi";
+}
+
+<div class="container">
+    <ul>
+        @foreach (var value in Model)
+        {
+            <li>@value | <a asp-action="Edit" asp-route-id="@Model.IndexOf(value)">Edit</a> | <a asp-action="Delete" asp-route-id="@Model.IndexOf(value)">Delete</a></li>
+        }
+    </ul>
+</div>
