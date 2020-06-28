@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using AutoMapper;
+
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 using System;
@@ -7,10 +9,9 @@ using System.Linq;
 using System.Threading.Tasks;
 
 using WebStore.DAL.Context;
+using WebStore.Domain.DTO.Order;
 using WebStore.Domain.Entities.Identity;
 using WebStore.Domain.Entities.Orders;
-using WebStore.Domain.ViewModels.Products;
-using WebStore.Domain.ViewModels.Products.Orders;
 using WebStore.Interfaces.Services;
 
 namespace WebStore.Services.Services.InSQL
@@ -19,14 +20,16 @@ namespace WebStore.Services.Services.InSQL
     {
         private readonly WebStoreDB db;
         private readonly UserManager<User> userManager;
+        private readonly IMapper mapper;
 
-        public SqlOrderDataService(WebStoreDB db, UserManager<User> userManager)
+        public SqlOrderDataService(WebStoreDB db, UserManager<User> userManager, IMapper mapper)
         {
             this.db = db;
             this.userManager = userManager;
+            this.mapper = mapper;
         }
 
-        public async Task<Order> CreateOrder(string userName, CartViewModel cart, OrderViewModel orderModel)
+        public async Task<OrderDTO> CreateOrder(string userName, CreateOrderModel orderModel)
         {
             var user = await userManager.FindByNameAsync(userName);
             if (user is null) throw new InvalidOperationException($"User {userName} not exist");
@@ -35,24 +38,24 @@ namespace WebStore.Services.Services.InSQL
 
             var order = new Order
             {
-                Name = orderModel.Name,
-                Address = orderModel.Address,
-                Phone = orderModel.Phone,
+                Name = orderModel.Order.Name,
+                Address = orderModel.Order.Address,
+                Phone = orderModel.Order.Phone,
                 User = user,
                 Date = DateTime.Now,
                 Items = new List<OrderItem>()
             };
 
-            foreach (var (productModel, quantity) in cart.Items)
+            foreach (var item in orderModel.Items)
             {
-                var product = await db.Products.FindAsync(productModel.Id);
-                if (product is null) throw new InvalidOperationException($"Product id:{productModel.Id} not exist");
+                var product = await db.Products.FindAsync(item.Id);
+                if (product is null) throw new InvalidOperationException($"Product id:{item.Id} not exist");
 
                 var orderItem = new OrderItem
                 {
                     Order = order,
                     Price = product.Price,
-                    Quantity = quantity,
+                    Quantity = item.Quantity,
                     Product = product
                 };
                 order.Items.Add(orderItem);
@@ -62,18 +65,18 @@ namespace WebStore.Services.Services.InSQL
             await db.SaveChangesAsync();
             await transaction.CommitAsync();
 
-            return order;
+            return mapper.Map<OrderDTO>(order);
         }
 
-        public async Task<IEnumerable<Order>> GetUserOrders(string userName) => await db.Orders
+        public async Task<IEnumerable<OrderDTO>> GetUserOrders(string userName) => (await db.Orders
            .Include(order => order.User)
            .Include(order => order.Items)
            .Where(order => order.User.UserName == userName)
-           .ToArrayAsync();
+           .ToArrayAsync())
+            .Select(mapper.Map<OrderDTO>);
 
-        public async Task<Order> GetOrderById(int id) => await db.Orders
+        public async Task<OrderDTO> GetOrderById(int id) => mapper.Map<OrderDTO>(await db.Orders
            .Include(order => order.Items)
-           .FirstOrDefaultAsync(order => order.Id == id);
-
+           .FirstOrDefaultAsync(order => order.Id == id));
     }
 }
