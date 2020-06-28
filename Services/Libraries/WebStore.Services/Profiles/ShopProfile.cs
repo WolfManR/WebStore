@@ -18,10 +18,11 @@ namespace WebStore.Services.Profiles
             CreateMap<Section, SectionViewModel>();
             CreateMap<Section, SectionDTO>();
 
-            CreateMap<Brand, BrandViewModel>().ForMember(dest => dest.ProductsCount, opt => opt.MapFrom(src => src.Products.Count));
+            CreateMap<Brand, BrandViewModel>();
             CreateMap<Brand, BrandDTO>().ReverseMap();
 
             CreateMap<Order, OrderDTO>().ReverseMap();
+            CreateMap<OrderItem, OrderItemDTO>().ReverseMap();
         }
     }
 }

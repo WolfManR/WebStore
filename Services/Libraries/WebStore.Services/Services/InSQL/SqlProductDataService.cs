@@ -24,21 +24,32 @@ namespace WebStore.Services.Services.InSQL
         }
 
         public IEnumerable<Section> GetSections() => db.Sections;
-        public IEnumerable<Brand> GetBrands() => db.Brands.Include(b=>b.Products);
+        public IEnumerable<Brand> GetBrands() => db.Brands;
 
         public IEnumerable<ProductDTO> GetProducts(ProductFilter Filter = null)
         {
             IQueryable<Product> query = db.Products;
 
-            if (Filter?.BrandId != null)
-                query = query.Where(product => product.BrandId == Filter.BrandId);
+            if (Filter?.Ids?.ToArray().Length > 0) query = query.Where(product => Filter.Ids.Contains(product.Id));
+            else
+            {
+                if (Filter?.BrandId != null)
+                    query = query.Where(product => product.BrandId == Filter.BrandId);
+                if (Filter?.SectionId != null)
+                    query = query.Where(product => product.SectionId == Filter.SectionId);
+            }
 
-            if (Filter?.SectionId != null)
-                query = query.Where(product => product.SectionId == Filter.SectionId);
+            
 
             return query.AsEnumerable().Select(mapper.Map<ProductDTO>);
         }
 
-        public ProductDTO GetProductById(int id) => mapper.Map<ProductDTO>(db.Products.Include(p => p.Section).Include(p => p.Brand).FirstOrDefault(p => p.Id == id));
+        public ProductDTO GetProductById(int id) => 
+            mapper.Map<ProductDTO>(
+                db.Products
+                    .Include(p => p.Section)
+                    .Include(p => p.Brand)
+                    .FirstOrDefault(p => p.Id == id)
+                );
     }
 }

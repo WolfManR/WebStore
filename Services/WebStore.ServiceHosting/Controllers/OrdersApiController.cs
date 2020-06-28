@@ -18,7 +18,7 @@ namespace WebStore.ServiceHosting.Controllers
         public OrdersApiController(IOrderDataService orderDataService) => this.orderDataService = orderDataService;
 
 
-        [HttpPost("{userName")]
+        [HttpPost("{userName}")]
         public Task<OrderDTO> CreateOrder(string userName,[FromBody] CreateOrderModel orderModel) => orderDataService.CreateOrder(userName, orderModel);
 
         [HttpGet("user/{userName}")]
