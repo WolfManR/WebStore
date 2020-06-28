@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 using System.Collections.Generic;
 using System.Linq;
-using AutoMapper.QueryableExtensions;
+
 using WebStore.DAL.Context;
 using WebStore.Domain.DTO.Products;
 using WebStore.Domain.Entities;
