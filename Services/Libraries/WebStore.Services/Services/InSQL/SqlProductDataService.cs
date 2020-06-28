@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 using System.Collections.Generic;
 using System.Linq;
-
+using AutoMapper.QueryableExtensions;
 using WebStore.DAL.Context;
 using WebStore.Domain.DTO.Products;
 using WebStore.Domain.Entities;
@@ -24,7 +24,7 @@ namespace WebStore.Services.Services.InSQL
         }
 
         public IEnumerable<Section> GetSections() => db.Sections;
-        public IEnumerable<Brand> GetBrands() => db.Brands;
+        public IEnumerable<BrandDTO> GetBrands() => mapper.ProjectTo<BrandDTO>(db.Brands.OrderBy(b => b.Order));
 
         public IEnumerable<ProductDTO> GetProducts(ProductFilter Filter = null)
         {
@@ -41,7 +41,7 @@ namespace WebStore.Services.Services.InSQL
 
             
 
-            return query.AsEnumerable().Select(mapper.Map<ProductDTO>);
+            return mapper.ProjectTo<ProductDTO>(query);
         }
 
         public ProductDTO GetProductById(int id) => 

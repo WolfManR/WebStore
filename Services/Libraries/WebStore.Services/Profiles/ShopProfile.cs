@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+
 using WebStore.Domain.DTO.Order;
 using WebStore.Domain.DTO.Products;
 using WebStore.Domain.Entities;
@@ -19,7 +20,8 @@ namespace WebStore.Services.Profiles
             CreateMap<Section, SectionDTO>();
 
             CreateMap<Brand, BrandViewModel>();
-            CreateMap<Brand, BrandDTO>().ReverseMap();
+            CreateMap<BrandDTO, BrandViewModel>().ReverseMap();
+            CreateMap<Brand, BrandDTO>().ForMember(dest => dest.ProductsCount, opt => opt.MapFrom(src => src.Products.Count)).ReverseMap();
 
             CreateMap<Order, OrderDTO>().ReverseMap();
             CreateMap<OrderItem, OrderItemDTO>().ReverseMap();

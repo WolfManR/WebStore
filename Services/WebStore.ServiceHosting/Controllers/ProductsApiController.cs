@@ -22,7 +22,7 @@ namespace WebStore.ServiceHosting.Controllers
         public IEnumerable<Section> GetSections() => productDataService.GetSections();
 
         [HttpGet("brands")]
-        public IEnumerable<Brand> GetBrands() => productDataService.GetBrands();
+        public IEnumerable<BrandDTO> GetBrands() => productDataService.GetBrands();
 
         [HttpPost]
         public IEnumerable<ProductDTO> GetProducts(ProductFilter Filter = null) => productDataService.GetProducts(Filter);

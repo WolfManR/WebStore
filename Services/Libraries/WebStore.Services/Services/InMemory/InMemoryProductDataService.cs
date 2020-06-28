@@ -20,7 +20,7 @@ namespace WebStore.Services.Services.InMemory
 
 
         public IEnumerable<Section> GetSections() => TestData.Sections;
-        public IEnumerable<Brand> GetBrands() => TestData.Brands;
+        public IEnumerable<BrandDTO> GetBrands() => TestData.Brands.Select(mapper.Map<BrandDTO>);
 
         public IEnumerable<ProductDTO> GetProducts(ProductFilter Filter = null)
         {
