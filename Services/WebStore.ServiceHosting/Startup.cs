@@ -1,3 +1,5 @@
+using AutoMapper;
+
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -13,6 +15,7 @@ using WebStore.Domain.Entities;
 using WebStore.Domain.Entities.Identity;
 using WebStore.Interfaces.Services;
 using WebStore.Services.Data;
+using WebStore.Services.Profiles;
 using WebStore.Services.Services.InSQL;
 using WebStore.Services.Services.InSQL.Base;
 
@@ -31,6 +34,8 @@ namespace WebStore.ServiceHosting
         {
             services.AddDbContext<WebStoreDB>(opt => opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddTransient<WebStoreDBInitializer>();
+
+            services.AddAutoMapper(typeof(EmployeeProfile), typeof(ShopProfile));
 
             services.AddIdentity<Domain.Entities.Identity.User, Role>().AddEntityFrameworkStores<WebStoreDB>().AddDefaultTokenProviders();
 
