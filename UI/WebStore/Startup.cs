@@ -10,6 +10,9 @@ using Microsoft.Extensions.Hosting;
 
 using System;
 
+using WebStore.Clients.Employees;
+using WebStore.Clients.Orders;
+using WebStore.Clients.Products;
 using WebStore.Clients.Values;
 using WebStore.DAL.Context;
 using WebStore.Domain.Entities;
@@ -20,8 +23,6 @@ using WebStore.Services.Data;
 using WebStore.Services.Profiles;
 using WebStore.Services.Services.InCookies;
 using WebStore.Services.Services.InMemory;
-using WebStore.Services.Services.InSQL;
-using WebStore.Services.Services.InSQL.Base;
 
 namespace WebStore
 {
@@ -39,7 +40,7 @@ namespace WebStore
             services.AddDbContext<WebStoreDB>(opt => opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddTransient<WebStoreDBInitializer>();
 
-            services.AddAutoMapper(typeof(EmployeeProfile),typeof(ShopProfile));
+            services.AddAutoMapper(typeof(EmployeeProfile), typeof(ShopProfile));
 
             services.AddIdentity<Domain.Entities.Identity.User, Role>().AddEntityFrameworkStores<WebStoreDB>().AddDefaultTokenProviders();
 
@@ -75,13 +76,16 @@ namespace WebStore
 
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
-            services.AddScoped<IRepo<Employee>, BaseRepo<Employee>>();
-            services.AddScoped<IProductDataService, SqlProductDataService>();
-            services.AddSingleton<IRepo<BlogPost>, InMemoryBlogDataService>();
-            services.AddScoped<ICartDataService, CookiesCartDataService>();
-            services.AddScoped<IOrderDataService, SqlOrderDataService>();
+            services
+                .AddScoped<IRepo<Employee>, EmployeesClient>()
+                .AddScoped<IProductDataService, ProductsClient>()
+                .AddScoped<IOrderDataService, OrdersClient>()
 
-            services.AddTransient<IValueService, ValuesClient>();
+                .AddTransient<IValueService, ValuesClient>()
+
+                .AddScoped<ICartDataService, CookiesCartDataService>()
+
+                .AddSingleton<IRepo<BlogPost>, InMemoryBlogDataService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, WebStoreDBInitializer db)

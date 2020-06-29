@@ -4,5 +4,14 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Libraries\WebStore.DAL\WebStore.DAL.csproj" />
+    <ProjectReference Include="..\Libraries\WebStore.Services\WebStore.Services.csproj" />
+  </ItemGroup>
+
 
 </Project>

@@ -1,7 +1,10 @@
-﻿using System;
+﻿using AutoMapper;
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+
+using System;
+using System.Linq;
 
 using WebStore.Domain.Entities;
 using WebStore.Domain.Entities.Identity;
@@ -13,13 +16,19 @@ namespace WebStore.Areas.Admin.Controllers
     public class CatalogController : Controller
     {
         private readonly IProductDataService productDataService;
+        private readonly IMapper mapper;
 
-        public CatalogController(IProductDataService productDataService) => this.productDataService = productDataService;
-        public IActionResult Index() => View(productDataService.GetProducts());
+        public CatalogController(IProductDataService productDataService, IMapper mapper)
+        {
+            this.productDataService = productDataService;
+            this.mapper = mapper;
+        }
+
+        public IActionResult Index() => View(productDataService.GetProducts().Select(mapper.Map<Product>));
 
         public IActionResult Edit(int? id)
         {
-            var product = id is null ? new Product() : productDataService.GetProductById((int)id);
+            var product = id is null ? new Product() : mapper.Map<Product>(productDataService.GetProductById((int)id));
 
             if (product is null) return NotFound();
             return View(product);
@@ -36,7 +45,7 @@ namespace WebStore.Areas.Admin.Controllers
             var product = productDataService.GetProductById((int)id);
 
             if (product is null) return NotFound();
-            return View(product);
+            return View(mapper.Map<Product>(product));
         }
 
         [HttpPost, ValidateAntiForgeryToken]

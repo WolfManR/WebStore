@@ -1,11 +1,10 @@
 ﻿using WebStore.Domain.Entities.Base.Interfaces;
 
-namespace WebStore.Domain.ViewModels.Products
+namespace WebStore.Domain.DTO.Products
 {
-    public class BrandViewModel : INamedEntity
+    public class SectionDTO : INamedEntity
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public int ProductsCount { get; set; }
     }
 }
