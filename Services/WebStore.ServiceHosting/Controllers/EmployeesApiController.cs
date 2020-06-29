@@ -46,6 +46,7 @@ namespace WebStore.ServiceHosting.Controllers
             return success;
         }
 
+        [NonAction]
         public void SaveChanges() => employeesRepo.SaveChanges();
     }
 }
