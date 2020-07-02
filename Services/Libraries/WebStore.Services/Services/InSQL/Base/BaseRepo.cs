@@ -26,8 +26,8 @@ namespace WebStore.Services.Services.InSQL.Base
             _ = entity ?? throw new ArgumentNullException(nameof(entity));
             if (entity.Id != 0) throw new InvalidOperationException("The primary key is manually set for the entity to be added.");
 
-            table.Add(entity);
-            return entity.Id;
+            var entry = table.Add(entity);
+            return entry.Entity.Id;
         }
 
         public bool Delete(int id)

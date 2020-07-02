@@ -8,10 +8,11 @@ using System.Threading.Tasks;
 
 namespace WebStore.Clients.Base
 {
-    public abstract class BaseClient
+    public abstract class BaseClient : IDisposable
     {
         protected readonly string ServiceAddress;
         protected readonly HttpClient Client;
+
 
         #region Ctor
 
@@ -65,7 +66,41 @@ namespace WebStore.Clients.Base
 
         public HttpResponseMessage Delete(string url) => DeleteAsync(url).Result;
         public async Task<HttpResponseMessage> DeleteAsync(string url, CancellationToken Cancel = default) =>
-            await Client.DeleteAsync(url, Cancel); 
+            await Client.DeleteAsync(url, Cancel);
+        #endregion
+
+
+        #region IDisposable implementation
+
+        private bool disposedValue;
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposedValue) return;
+            if (disposing)
+            {
+                // TODO: освободить управляемое состояние (управляемые объекты)
+                ((IDisposable)Client).Dispose();
+            }
+
+            // TODO: освободить неуправляемые ресурсы (неуправляемые объекты) и переопределить метод завершения
+            // TODO: установить значение NULL для больших полей
+            disposedValue = true;
+        }
+
+        // // TODO: переопределить метод завершения, только если "Dispose(bool disposing)" содержит код для освобождения неуправляемых ресурсов
+        // ~BaseClient()
+        // {
+        //     // Не изменяйте этот код. Разместите код очистки в методе "Dispose(bool disposing)".
+        //     Dispose(disposing: false);
+        // }
+
+        public void Dispose()
+        {
+            // Не изменяйте этот код. Разместите код очистки в методе "Dispose(bool disposing)".
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
+        }
         #endregion
     }
 }
