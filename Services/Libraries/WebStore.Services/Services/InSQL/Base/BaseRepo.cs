@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 using System;
 using System.Collections.Generic;
@@ -14,10 +15,12 @@ namespace WebStore.Services.Services.InSQL.Base
     {
         private readonly DbSet<T> table;
         private readonly WebStoreDB db;
+        private readonly ILogger<BaseRepo<T>> logger;
 
-        public BaseRepo(WebStoreDB db)
+        public BaseRepo(WebStoreDB db, ILogger<BaseRepo<T>> logger)
         {
             this.db = db;
+            this.logger = logger;
             this.table = db.Set<T>();
         }
 
@@ -32,10 +35,10 @@ namespace WebStore.Services.Services.InSQL.Base
 
         public bool Delete(int id)
         {
-            var db_item = GetById(id);
-            if (db_item is null) return false;
+            var dbItem = GetById(id);
+            if (dbItem is null) return false;
 
-            table.Remove(db_item);
+            table.Remove(dbItem);
             return true;
         }
 

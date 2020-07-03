@@ -14,6 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Common\WebStore.Logger\WebStore.Logger.csproj" />
     <ProjectReference Include="..\Libraries\WebStore.DAL\WebStore.DAL.csproj" />
     <ProjectReference Include="..\Libraries\WebStore.Services\WebStore.Services.csproj" />
   </ItemGroup>

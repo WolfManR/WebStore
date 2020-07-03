@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 using System.Collections.Generic;
 
@@ -16,11 +17,18 @@ namespace WebStore.ServiceHosting.Controllers
     public class EmployeesApiController : ControllerBase, IRepo<Employee>
     {
         private readonly IRepo<Employee> employeesRepo;
+        private readonly ILogger<EmployeesApiController> logger;
+
         /// <summary>
         /// Employees Ctor
         /// </summary>
         /// <param name="employeesDataService">Employees Data Service</param>
-        public EmployeesApiController(IRepo<Employee> employeesDataService) => employeesRepo = employeesDataService;
+        /// <param name="logger">Logger</param>
+        public EmployeesApiController(IRepo<Employee> employeesDataService, ILogger<EmployeesApiController> logger)
+        {
+            employeesRepo = employeesDataService;
+            this.logger = logger;
+        }
 
         /// <summary>
         /// Return all employees
@@ -45,6 +53,8 @@ namespace WebStore.ServiceHosting.Controllers
         [HttpPost]
         public int Add([FromBody] Employee entity)
         {
+            logger.LogInformation("Adding a new employee: [{0}]{1} {2} {3}", entity.Id, entity.Surname, entity.Firstname);
+
             var id = employeesRepo.Add(entity);
             SaveChanges();
             return id;
@@ -57,6 +67,8 @@ namespace WebStore.ServiceHosting.Controllers
         [HttpPut]
         public void Edit(Employee entity)
         {
+            logger.LogInformation("Editing employee: [{0}]{1} {2} {3}", entity.Id, entity.Surname, entity.Firstname);
+
             employeesRepo.Edit(entity);
             SaveChanges();
         }
@@ -69,6 +81,8 @@ namespace WebStore.ServiceHosting.Controllers
         [HttpDelete]
         public bool Delete(int id)
         {
+            logger.LogInformation("Removing employee id: {0}", id);
+
             var success = employeesRepo.Delete(id);
             SaveChanges();
             return success;

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 using System;
 using System.Collections.Generic;
@@ -18,18 +19,27 @@ namespace WebStore.Services.Data
         private readonly WebStoreDB db;
         private readonly UserManager<User> userManager;
         private readonly RoleManager<Role> roleManager;
+        private readonly ILogger<WebStoreDBInitializer> logger;
 
-        public WebStoreDBInitializer(WebStoreDB db, UserManager<User> userManager, RoleManager<Role> roleManager)
+        public WebStoreDBInitializer(WebStoreDB db, UserManager<User> userManager, RoleManager<Role> roleManager, ILogger<WebStoreDBInitializer> logger)
         {
             this.db = db;
             this.userManager = userManager;
             this.roleManager = roleManager;
+            this.logger = logger;
         }
 
         public void Initialize()
         {
             var DB = db.Database;
-            DB.Migrate();
+
+            if (DB.GetPendingMigrations().Any())
+            {
+                logger.LogInformation("Preparing to perform database migration");
+                DB.Migrate();
+                logger.LogInformation("Database migration completed");
+            }
+            
 
 
             TableInitWiaTransaction(db, TestData.Sections, true);
