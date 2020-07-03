@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
 using System;
 
@@ -18,6 +19,7 @@ using WebStore.Domain.Entities;
 using WebStore.Domain.Entities.Identity;
 using WebStore.Interfaces.Services;
 using WebStore.Interfaces.TestApi;
+using WebStore.Logger.Log4Net;
 using WebStore.Services.Profiles;
 using WebStore.Services.Services.InCookies;
 using WebStore.Services.Services.InMemory;
@@ -98,8 +100,10 @@ namespace WebStore
                 .AddSingleton<IRepo<BlogPost>, InMemoryBlogDataService>();
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory log)
         {
+            log.AddLog4Net();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
