@@ -17,6 +17,7 @@ using WebStore.Clients.Products;
 using WebStore.Clients.Values;
 using WebStore.Domain.Entities;
 using WebStore.Domain.Entities.Identity;
+using WebStore.Infrastructure.Middleware;
 using WebStore.Interfaces.Services;
 using WebStore.Interfaces.TestApi;
 using WebStore.Logger.Log4Net;
@@ -110,6 +111,7 @@ namespace WebStore
                 app.UseBrowserLink();
             }
             app.UseStatusCodePagesWithReExecute("/Errors/{0}");
+            app.UseMiddleware<ErrorHandlingMiddleware>();
             // needed for work MVC
             app.UseStaticFiles();
             app.UseDefaultFiles();
