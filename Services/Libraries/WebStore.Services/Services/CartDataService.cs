@@ -1,56 +1,30 @@
-﻿using System.Linq;
-using AutoMapper;
-using Microsoft.AspNetCore.Http;
-using Newtonsoft.Json;
+﻿using AutoMapper;
+
+using System.Linq;
+
 using WebStore.Domain.Entities;
 using WebStore.Domain.Models;
 using WebStore.Domain.ViewModels.Products;
 using WebStore.Interfaces.Services;
 
-namespace WebStore.Services.Services.InCookies
+namespace WebStore.Services.Services
 {
-    public class CookiesCartDataService : ICartDataService
+    public class CartDataService : ICartDataService
     {
         private readonly IProductDataService dataService;
-        private readonly IHttpContextAccessor accessor;
+        private readonly ICartRepo cartRepo;
         private readonly IMapper mapper;
-        private readonly string cartName;
 
-        public CookiesCartDataService(IProductDataService productDataService, IHttpContextAccessor httpContextAccessor, IMapper mapper)
+        public Cart Cart { get => cartRepo.Cart; set => cartRepo.Cart = value; }
+
+
+        public CartDataService(IProductDataService productDataService, ICartRepo cartRepo, IMapper mapper)
         {
             dataService = productDataService;
-            accessor = httpContextAccessor;
+            this.cartRepo = cartRepo;
             this.mapper = mapper;
-            var user = httpContextAccessor.HttpContext.User;
-            var userName = user.Identity.IsAuthenticated ? user.Identity.Name : null;
-            cartName = $"WebStore.Cart[{userName}]";
         }
 
-        public Cart Cart
-        {
-            get
-            {
-                var context = accessor.HttpContext;
-                var cookies = context.Response.Cookies;
-                var cartCookie = context.Request.Cookies[cartName];
-                if (cartCookie is null)
-                {
-                    var cart = new Cart();
-                    cookies.Append(cartName, JsonConvert.SerializeObject(cart));
-                    return cart;
-                }
-
-                ReplaceCookie(cookies, cartCookie);
-                return JsonConvert.DeserializeObject<Cart>(cartCookie);
-            }
-            set => ReplaceCookie(accessor.HttpContext.Response.Cookies, JsonConvert.SerializeObject(value));
-        }
-
-        private void ReplaceCookie(IResponseCookies cookies, string cookie)
-        {
-            cookies.Delete(cartName);
-            cookies.Append(cartName, cookie);
-        }
 
         #region ICartDataService reailization
 
@@ -109,7 +83,7 @@ namespace WebStore.Services.Services.InCookies
             {
                 Items = Cart.Items.Select(item => (productViewModels[item.ProductId], item.Quantity))
             };
-        } 
+        }
         #endregion
     }
 }

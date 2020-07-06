@@ -22,6 +22,7 @@ using WebStore.Interfaces.Services;
 using WebStore.Interfaces.TestApi;
 using WebStore.Logger.Log4Net;
 using WebStore.Services.Profiles;
+using WebStore.Services.Services;
 using WebStore.Services.Services.InCookies;
 using WebStore.Services.Services.InMemory;
 
@@ -96,7 +97,8 @@ namespace WebStore
 
                 .AddTransient<IValueService, ValuesClient>()
 
-                .AddScoped<ICartDataService, CookiesCartDataService>()
+                .AddScoped<ICartRepo, CookiesCartRepo>()
+                .AddScoped<ICartDataService, CartDataService>()
 
                 .AddSingleton<IRepo<BlogPost>, InMemoryBlogDataService>();
         }
