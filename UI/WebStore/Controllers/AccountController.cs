@@ -1,8 +1,11 @@
-﻿using System.Threading.Tasks;
-
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 using WebStore.Domain.Entities.Identity;
 using WebStore.Domain.ViewModels.Identity;
@@ -13,11 +16,13 @@ namespace WebStore.Controllers
     {
         private readonly UserManager<User> userManager;
         private readonly SignInManager<User> signInManager;
+        private readonly ILogger<AccountController> logger;
 
-        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager)
+        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, ILogger<AccountController> logger)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
+            this.logger = logger;
         }
 
 
@@ -32,18 +37,38 @@ namespace WebStore.Controllers
 
             var user = new User { UserName = model.UserName };
 
-            var registration_result = await userManager.CreateAsync(user, model.Password);
-            if (registration_result.Succeeded)
+            using (logger.BeginScope("New User Registration {0}", user.UserName))
             {
-                await userManager.AddToRoleAsync(user, Role.User);
+                logger.LogInformation("The process of registering a new user {0}", user.UserName);
 
-                await signInManager.SignInAsync(user, false);
-                return RedirectToAction("Home", "Shop");
-            }
+                var registrationResult = await userManager.CreateAsync(user, model.Password);
+                if (registrationResult.Succeeded)
+                {
+                    logger.LogInformation("User {0} successfully registered", user.UserName);
 
-            foreach (var error in registration_result.Errors)
-            {
-                ModelState.AddModelError(string.Empty, error.Description);
+                    var addUserRoleResult = await userManager.AddToRoleAsync(user, Role.User);
+                    //if (addUserRoleResult.Succeeded) logger.LogInformation("Role {0} successfully added to user", Role.User);
+                    //else
+                    //{
+                    //    logger.LogError("Error adding user role {0}: {1}",Role.User, string.Join(",", addUserRoleResult.Errors.Select(error => error.Description)));
+
+                    //    throw new ApplicationException("Error assigning a new user to the User role");
+                    //}
+
+
+                    await signInManager.SignInAsync(user, false);
+
+                    logger.LogInformation("User {0} successfully logged in", user.UserName);
+
+                    return RedirectToAction("Home", "Shop");
+                }
+
+                logger.LogError("Error adding new user of role {0}: {1}",user.UserName, string.Join(",", registrationResult.Errors.Select(error => error.Description)));
+
+                foreach (var error in registrationResult.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, error.Description);
+                }
             }
 
             return View(model);
@@ -60,13 +85,24 @@ namespace WebStore.Controllers
         {
             if (!ModelState.IsValid) return View(model);
 
-            var login_result = await signInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, false);
+            var loginResult = await signInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, false);
 
-            if (login_result.Succeeded)
+            if (loginResult.Succeeded)
             {
-                if (Url.IsLocalUrl(model.ReturnUrl)) return Redirect(model.ReturnUrl);
+                logger.LogInformation("User {0} successfully logged in", model.UserName);
+
+                if (Url.IsLocalUrl(model.ReturnUrl))
+                {
+                    logger.LogDebug("Redirecting to {0}", model.ReturnUrl);
+
+                    return Redirect(model.ReturnUrl);
+                }
+
+                logger.LogDebug("Redirecting to the main page");
                 return RedirectToAction("Home", "Shop");
             }
+
+            logger.LogWarning("User {0} made an incorrect login attempt");
 
             ModelState.AddModelError(string.Empty, "Wrong username or password");
 
@@ -78,7 +114,11 @@ namespace WebStore.Controllers
         [Authorize]
         public async Task<IActionResult> Logout()
         {
+            var userName = User.Identity.Name;
             await signInManager.SignOutAsync();
+
+            logger.LogInformation("User {0} has logged out", userName);
+
             return RedirectToAction("Home", "Shop");
         }
     }
