@@ -21,8 +21,7 @@ namespace WebStore.Tests.Controllers
     [TestClass]
     public class ShopControllerTests
     {
-        private readonly IEnumerable<ProductDTO> products = new[]
-        {
+        private readonly ProductDTO[] products = {
             new ProductDTO
             {
                 Id = 1,
@@ -45,7 +44,7 @@ namespace WebStore.Tests.Controllers
             {
                 Id = 2,
                 Name = "Product 2",
-                Order = 0,
+                Order = 1,
                 Price = 20m,
                 ImageUrl = "Product2.png",
                 Brand = new BrandDTO
@@ -70,6 +69,10 @@ namespace WebStore.Tests.Controllers
         {
             productDataMock = new Mock<IProductDataService>();
             productDataMock.Setup(p => p.GetProducts(It.IsAny<ProductFilter>())).Returns(products);
+            productDataMock.Setup(p => p.GetProductById(It.IsAny<int>()))
+                .Returns<int>(id => products.FirstOrDefault(product=>product.Id==id));
+
+
 
             mapperMock = new Mock<IMapper>();
             mapperMock.Setup(mapper => mapper.Map<ProductViewModel>(It.IsAny<ProductDTO>()))
@@ -94,7 +97,7 @@ namespace WebStore.Tests.Controllers
             const int expectedProductId = 1;
             const decimal expectedPrice = 10m;
 
-            var expectedName = $"Product id {expectedProductId}";
+            var expectedName = $"Product {expectedProductId}";
             var expectedBrandName = $"Brand of product {expectedProductId}";
 
             var controller = new ShopController(productDataMock.Object, mapperMock.Object);
@@ -137,7 +140,7 @@ namespace WebStore.Tests.Controllers
             Assert.Equal(expectedBrandId, model.BrandId);
             Assert.Equal(expectedSectionId, model.SectionId);
 
-            //Assert.Equal(products[0].Brand.Name, actual_products[0].Brand);
+            Assert.Equal(products[0].Brand.Name, model.Products.First().Brand);
         }
     }
 }
