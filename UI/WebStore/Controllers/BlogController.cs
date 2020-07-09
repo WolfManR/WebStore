@@ -1,12 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-using System.Collections.Generic;
 using System.Linq;
 
 using WebStore.Domain.Entities;
 using WebStore.Domain.ViewModels.Blog;
-using WebStore.Services.Services.InMemory;
 using WebStore.Interfaces.Services;
+using WebStore.Services.Services.InMemory;
 
 namespace WebStore.Controllers
 {
@@ -21,22 +20,21 @@ namespace WebStore.Controllers
         }
         public IActionResult BlogList()
         {
-            var Blogs = repoBlogPost.GetAll();
-            List<BlogPostShortInfoViewModel> shortViews = new List<BlogPostShortInfoViewModel>();
-            foreach (var item in Blogs)
-            {
-                var author = repoAccount.GetById(item.AuthorAccountId);
-                shortViews.Add(new BlogPostShortInfoViewModel
+            var blogs = repoBlogPost.GetAll();
+            var shortViews = (
+                from item in blogs
+                let author = repoAccount.GetById(item.AuthorAccountId)
+                select new BlogPostShortInfoViewModel
                 {
                     Id = item.Id,
-                    Author=new UserViewModel {Id=author.Id,AvatarUrl=author.AvatarUrl,Firstname=author.Firstname,Surname=author.Surname },
+                    Author = new UserViewModel {Id = author.Id, AvatarUrl = author.AvatarUrl, Firstname = author.Firstname, Surname = author.Surname},
                     MainImageUrl = item.MainImageUrl,
                     Subject = item.Subject,
                     RegistrationTime = item.RegistrationTime,
                     ShortDesc = item.ShortDesc,
                     Tags = item.Tags.ToList()
-                });
-            }
+                }).ToList();
+
             return View(shortViews);
         }
 
@@ -48,20 +46,17 @@ namespace WebStore.Controllers
             if (post is null) return NotFound();
 
             var comments = post.Comments;
-            List<CommentViewModel> commentsViews = new List<CommentViewModel>();
-            foreach (var item in comments)
-            {
-                var account = repoAccount.GetById(item.AccountId);
-
-                commentsViews.Add(new CommentViewModel
+            var commentsViews = (
+                from item in comments
+                let account = repoAccount.GetById(item.AccountId)
+                select new CommentViewModel
                 {
                     Id = item.Id,
-                    Account = new UserViewModel { Id = account.Id, AvatarUrl = account.AvatarUrl, Firstname = account.Firstname, Surname = account.Surname },
+                    Account = new UserViewModel {Id = account.Id, AvatarUrl = account.AvatarUrl, Firstname = account.Firstname, Surname = account.Surname},
                     Text = item.Text,
                     Time = item.Time,
-                    ParentCommentId=item.ParentCommentId
-                });
-            }
+                    ParentCommentId = item.ParentCommentId
+                }).ToList();
 
             foreach (var view in commentsViews)
             {
