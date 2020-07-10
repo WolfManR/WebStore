@@ -21,29 +21,45 @@ namespace WebStore.Components
             this.mapper = mapper;
         }
 
-        public IViewComponentResult Invoke() => View(GetSections());
-
-        private IEnumerable<SectionViewModel> GetSections()
+        public IViewComponentResult Invoke(string sectionId)
         {
-            var sections = productDataService.GetSections();
+            var section_Id = int.TryParse(sectionId, out var id) ? id : (int?)null;
 
-            var parent_sections = sections.Where(s => s.ParentId is null);
+            var sections = GetSections(section_Id, out var parentSectionId);
 
-            var parent_Sections_views = parent_sections.Select(mapper.Map<SectionViewModel>).ToList();
-
-            foreach (var parent_section in parent_Sections_views)
+            return View(new SelectableSectionsViewModel
             {
-                var childs = sections.Where(s => s.ParentId == parent_section.Id);
+                Sections = sections,
+                CurrentSectionId = section_Id,
+                ParentSectionId = parentSectionId
+            });
+        }
 
-                foreach (var child_section in childs)
-                    parent_section.ChildSections.Add(mapper.Map<SectionViewModel>(child_section));
+        private IEnumerable<SectionViewModel> GetSections(int? sectionId,out int? parentSectionId)
+        {
+            parentSectionId = null;
+            var sections = productDataService.GetSections().ToArray();
 
-                parent_section.ChildSections.Sort((a, b) => Comparer<double>.Default.Compare(a.Order, b.Order));
+            var parentSections = sections.Where(s => s.ParentId is null);
+
+            var parentSectionsViews = parentSections.Select(mapper.Map<SectionViewModel>).ToList();
+
+            foreach (var parentSection in parentSectionsViews)
+            {
+                var childs = sections.Where(s => s.ParentId == parentSection.Id);
+
+                foreach (var childSection in childs)
+                {
+                    if (childSection.Id == sectionId) parentSectionId = parentSection.Id;
+                    parentSection.ChildSections.Add(mapper.Map<SectionViewModel>(childSection));
+                }
+
+                parentSection.ChildSections.Sort((a, b) => Comparer<double>.Default.Compare(a.Order, b.Order));
             }
 
-            parent_Sections_views.Sort((a, b) => Comparer<double>.Default.Compare(a.Order, b.Order));
+            parentSectionsViews.Sort((a, b) => Comparer<double>.Default.Compare(a.Order, b.Order));
 
-            return parent_Sections_views;
+            return parentSectionsViews;
         }
     }
 }
