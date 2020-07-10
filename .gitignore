@@ -349,3 +349,4 @@ healthchecksdb
 /Common/WebStore.Domain/WebStore.Domain.xml
 /UI/WebStore/Logs
 /Services/WebStore.ServiceHosting/Logs
+UI/WebStore/wwwroot/css/site.css
