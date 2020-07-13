@@ -21,7 +21,12 @@ namespace WebStore.Components
             this.mapper = mapper;
         }
 
-        public IViewComponentResult Invoke() => View(GetBrands());
+        public IViewComponentResult Invoke(string brandId) =>
+            View(new SelectableBrandsViewModel
+            {
+                Brands = GetBrands(),
+                CurrentBrandId = int.TryParse(brandId,out var id)?id:(int?)null
+            });
 
         private IEnumerable<BrandViewModel> GetBrands() => productDataService.GetBrands()
                .Select(mapper.Map<BrandViewModel>);
