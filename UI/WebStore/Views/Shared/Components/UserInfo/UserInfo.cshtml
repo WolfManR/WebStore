@@ -6,7 +6,11 @@
             <li><a asp-area="Admin" asp-controller="Home" asp-action="Index"><i class="fa fa-user"></i> Admin</a></li>
         }
         <li><a asp-controller="Employees" asp-action="Index">Employees</a></li>
-        <li><a asp-controller="Cart" asp-action="Details"><i class="fa fa-shopping-cart"></i> Cart</a></li>
+        <li><a asp-controller="Cart" asp-action="Details">
+                <div id="cart-contatiner">
+                    <vc:cart />
+                </div>
+        </a></li>
         <li class="dropdown">
             <a href="#">UserName<i class="fa fa-angle-down"></i></a>
             <ul role="menu" class="sub-menu">

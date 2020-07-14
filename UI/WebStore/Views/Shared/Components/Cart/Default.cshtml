@@ -1,0 +1,8 @@
+﻿@model CartViewModel
+
+@{
+    var productCount = Model.ItemsCount > 0 ? Model.ItemsCount : (int?)null;
+    var productCountStr = productCount is null ? null : $" ({productCount})";
+}
+
+<i class="fa fa-shopping-cart"></i> Cart @productCountStr 
