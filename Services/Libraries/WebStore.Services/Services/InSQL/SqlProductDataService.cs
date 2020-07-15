@@ -26,7 +26,7 @@ namespace WebStore.Services.Services.InSQL
         public IEnumerable<Section> GetSections() => db.Sections;
         public IEnumerable<BrandDTO> GetBrands() => mapper.ProjectTo<BrandDTO>(db.Brands.OrderBy(b => b.Order));
 
-        public IEnumerable<ProductDTO> GetProducts(ProductFilter Filter = null)
+        public PageProductsDTO GetProducts(ProductFilter Filter = null)
         {
             IQueryable<Product> query = db.Products;
 
@@ -39,9 +39,18 @@ namespace WebStore.Services.Services.InSQL
                     query = query.Where(product => product.SectionId == Filter.SectionId);
             }
 
-            
 
-            return mapper.ProjectTo<ProductDTO>(query);
+
+            var totalCount = query.Count();
+
+            if (Filter?.PageSize > 0)
+                query = query.Skip((Filter.Page - 1) * (int)Filter.PageSize).Take((int)Filter.PageSize);
+
+            return new PageProductsDTO
+            {
+                Products = mapper.ProjectTo<ProductDTO>(query),
+                TotalCount = totalCount
+            };
         }
 
         public ProductDTO GetProductById(int id) => 

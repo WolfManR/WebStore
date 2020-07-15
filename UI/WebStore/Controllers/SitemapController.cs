@@ -30,7 +30,7 @@ namespace WebStore.Controllers
                 .Select(brand => new SitemapNode(Url.Action("Products", "Shop", new {BrandId = brand.Id}))));
 
             nodes.AddRange(productDataService.GetProducts()
-                .Select(product => new SitemapNode(Url.Action("ProductDetails", "Shop", new {product.Id}))));
+                .Products.Select(product => new SitemapNode(Url.Action("ProductDetails", "Shop", new {product.Id}))));
 
             return new SitemapProvider().CreateSitemap(new SitemapModel(nodes));
         }

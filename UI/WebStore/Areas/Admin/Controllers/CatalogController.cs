@@ -24,7 +24,7 @@ namespace WebStore.Areas.Admin.Controllers
             this.mapper = mapper;
         }
 
-        public IActionResult Index() => View(productDataService.GetProducts().Select(mapper.Map<Product>));
+        public IActionResult Index() => View(productDataService.GetProducts().Products.Select(mapper.Map<Product>));
 
         public IActionResult Edit(int? id)
         {

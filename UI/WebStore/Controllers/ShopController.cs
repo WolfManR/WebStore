@@ -26,7 +26,7 @@ namespace WebStore.Controllers
 
             return View(new CatalogViewModel
             {
-                Products = products.Take(6).Select(mapper.Map<ProductViewModel>).OrderBy(p => p.Order)
+                Products = products.Products.Take(6).Select(mapper.Map<ProductViewModel>).OrderBy(p => p.Order)
             });
         }
 
@@ -44,7 +44,7 @@ namespace WebStore.Controllers
             {
                 SectionId = SectionId,
                 BrandId = BrandId,
-                Products = products.Select(mapper.Map<ProductViewModel>).OrderBy(p => p.Order)
+                Products = products.Products.Select(mapper.Map<ProductViewModel>).OrderBy(p => p.Order)
             });
         }
 

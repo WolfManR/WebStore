@@ -68,7 +68,11 @@ namespace WebStore.Tests.Controllers
         public void TestInitialize()
         {
             productDataMock = new Mock<IProductDataService>();
-            productDataMock.Setup(p => p.GetProducts(It.IsAny<ProductFilter>())).Returns(products);
+            productDataMock.Setup(p => p.GetProducts(It.IsAny<ProductFilter>())).Returns(new PageProductsDTO
+            {
+                Products = products,
+                TotalCount = products.Length
+            });
             productDataMock.Setup(p => p.GetProductById(It.IsAny<int>()))
                 .Returns<int>(id => products.FirstOrDefault(product=>product.Id==id));
 
