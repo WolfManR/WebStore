@@ -7,7 +7,7 @@ using Moq;
 
 using System.Collections.Generic;
 using System.Linq;
-
+using Microsoft.Extensions.Configuration;
 using WebStore.Controllers;
 using WebStore.Domain.DTO.Products;
 using WebStore.Domain.Entities;
@@ -104,7 +104,9 @@ namespace WebStore.Tests.Controllers
             var expectedName = $"Product {expectedProductId}";
             var expectedBrandName = $"Brand of product {expectedProductId}";
 
-            var controller = new ShopController(productDataMock.Object, mapperMock.Object);
+            var configurationMock = new Mock<IConfiguration>();
+            configurationMock.Setup(cfg => cfg["PageSize"]).Returns("3");
+            var controller = new ShopController(productDataMock.Object, mapperMock.Object,configurationMock.Object);
 
             #endregion
 
@@ -130,7 +132,9 @@ namespace WebStore.Tests.Controllers
         [TestMethod]
         public void Shop_Returns_Correct_View()
         {
-            var controller = new ShopController(productDataMock.Object, mapperMock.Object);
+            var configurationMock = new Mock<IConfiguration>();
+            configurationMock.Setup(cfg => cfg["PageSize"]).Returns("3");
+            var controller = new ShopController(productDataMock.Object, mapperMock.Object, configurationMock.Object);
 
             const int expectedSectionId = 1;
             const int expectedBrandId = 5;
