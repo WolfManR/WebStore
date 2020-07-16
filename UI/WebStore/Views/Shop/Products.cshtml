@@ -16,12 +16,8 @@
 
             <div class="col-sm-9 padding-right">
                 <partial name="Partial/_FeaturesItems" model="Model.Products"/>
-                @*<ul class="pagination">
-                  <li class="active"><a href="">1</a></li>
-                  <li><a href="">2</a></li>
-                  <li><a href="">3</a></li>
-                  <li><a href="">&raquo;</a></li>
-                </ul>*@
+                @*important use open and close tags in tag helpers that will generate its content(O <tag></tag> ; X <tag/>)*@
+                <paging page-model="@Model.PageViewModel" page-action="Products" page-url-SectionId="@Model.SectionId" page-url-BrandId="@Model.BrandId"></paging>
             </div>
         </div>
     </div>
