@@ -17,6 +17,7 @@ using WebStore.Clients.Products;
 using WebStore.Clients.Values;
 using WebStore.Domain.Entities;
 using WebStore.Domain.Entities.Identity;
+using WebStore.Hubs;
 using WebStore.Infrastructure.Middleware;
 using WebStore.Interfaces.Services;
 using WebStore.Interfaces.TestApi;
@@ -39,6 +40,8 @@ namespace WebStore
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSignalR();
+
             services.AddAutoMapper(typeof(EmployeeProfile), typeof(ShopProfile));
 
             services.AddIdentity<Domain.Entities.Identity.User, Role>().AddDefaultTokenProviders();
@@ -125,6 +128,8 @@ namespace WebStore
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapHub<InformationHub>("/info");
+
                 endpoints.MapAreaControllerRoute(
                         name: "areaAdmin",
                         areaName: "Admin",
