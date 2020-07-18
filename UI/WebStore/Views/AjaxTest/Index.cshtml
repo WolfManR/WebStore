@@ -2,4 +2,40 @@
     ViewBag.Title = "Index";
 }
 
-<h2>@ViewBag.Title</h2>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-4">
+            <h4>Server side rendering</h4>
+
+            <a class="btn btn-default" data-ajax="true" data-ajax-url="@Url.Action("GetTestView", "AjaxTest", new { id = 42, msg = "Test message!!!" })" data-ajax-update="#panel-server" data-ajax-loading="#spnner-server">
+                Load
+            </a>
+
+            <span id="spnner-server" style="display: none">
+                <i class="fa fa-spinner fa-spin"></i>
+            </span>
+
+            <div id="panel-server"></div>
+        </div>
+
+        <div class="col-sm-4">
+            <h4>Client side rendering</h4>
+
+            <a class="btn btn-default">load</a>
+
+            <span id="spnner-clinet" style="display: none">
+                <i class="fa fa-spinner fa-spin"></i>
+            </span>
+
+            <div id="panel-client"></div>
+        </div>
+
+        <div class="col-sm-4">
+            <h4>Rendering manually</h4>
+
+            <a class="btn btn-default">Load</a>
+
+            <div id="panel-js"></div>
+        </div>
+    </div>
+</div>
