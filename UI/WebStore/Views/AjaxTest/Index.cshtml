@@ -7,11 +7,11 @@
         <div class="col-sm-4">
             <h4>Server side rendering</h4>
 
-            <a class="btn btn-default" data-ajax="true" data-ajax-url="@Url.Action("GetTestView", "AjaxTest", new { id = 42, msg = "Test message!!!" })" data-ajax-update="#panel-server" data-ajax-loading="#spnner-server">
+            <a class="btn btn-default" data-ajax="true" data-ajax-url="@Url.Action("GetTestView", "AjaxTest", new { id = 42, msg = "Test message!!!" })" data-ajax-update="#panel-server" data-ajax-loading="#spiner-server">
                 Load
             </a>
 
-            <span id="spnner-server" style="display: none">
+            <span id="spiner-server" style="display: none">
                 <i class="fa fa-spinner fa-spin"></i>
             </span>
 
@@ -21,9 +21,11 @@
         <div class="col-sm-4">
             <h4>Client side rendering</h4>
 
-            <a class="btn btn-default">load</a>
+            <a class="btn btn-default" data-ajax="true" data-ajax-url="@Url.Action("GetJson", "AjaxTest", new { id = 13, msg = "Hello World!!!" })" data-ajax-success="OnLoaded" data-ajax-loading="#spiner-client">
+                Load
+            </a>
 
-            <span id="spnner-clinet" style="display: none">
+            <span id="spiner-client" style="display: none">
                 <i class="fa fa-spinner fa-spin"></i>
             </span>
 
@@ -35,7 +37,24 @@
 
             <a class="btn btn-default">Load</a>
 
+            <span id="spiner-manual" style="display: none">
+                <i class="fa fa-spinner fa-spin"></i>
+            </span>
+
             <div id="panel-js"></div>
         </div>
     </div>
 </div>
+
+@section Scripts
+{
+    <script>
+        OnLoaded = data => {
+            const host = $("#panel-client");
+            host.empty();
+            host.append("msg: " + data.message);
+            host.append("<br/>");
+            host.append("time: " + data.serverTime);
+        }
+    </script>
+}
