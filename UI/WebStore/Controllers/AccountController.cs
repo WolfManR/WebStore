@@ -25,6 +25,12 @@ namespace WebStore.Controllers
             this.logger = logger;
         }
 
+        public async Task<IActionResult> IsNameFree(string userName)
+        {
+            var user = await userManager.FindByNameAsync(userName);
+            logger.LogInformation("User {0} {1} exists", userName, user is null ? "не" : null);
+            return Json(user is null ? "true" : "A user with the same name already exists");
+        }
 
         #region Register
 
