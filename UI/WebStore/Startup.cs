@@ -93,6 +93,8 @@ namespace WebStore
 
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
+            services.AddRazorPages();
+
             services
                 .AddScoped<IRepo<Employee>, EmployeesClient>()
                 .AddScoped<IProductDataService, ProductsClient>()
@@ -113,8 +115,11 @@ namespace WebStore
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseWebAssemblyDebugging();
                 app.UseBrowserLink();
             }
+
+            app.UseBlazorFrameworkFiles();
             app.UseStatusCodePagesWithReExecute("/Errors/{0}");
             app.UseMiddleware<ErrorHandlingMiddleware>();
             // needed for work MVC
@@ -129,6 +134,9 @@ namespace WebStore
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapHub<InformationHub>("/info");
+
+                endpoints.MapRazorPages();
+                endpoints.MapFallbackToFile("blazor.html");
 
                 endpoints.MapAreaControllerRoute(
                         name: "areaAdmin",
