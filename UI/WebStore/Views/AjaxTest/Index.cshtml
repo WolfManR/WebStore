@@ -35,11 +35,7 @@
         <div class="col-sm-4">
             <h4>Rendering manually</h4>
 
-            <a class="btn btn-default">Load</a>
-
-            <span id="spiner-manual" style="display: none">
-                <i class="fa fa-spinner fa-spin"></i>
-            </span>
+            <a class="btn btn-default" id="load-data-button">Load</a>
 
             <div id="panel-js"></div>
         </div>
@@ -56,5 +52,19 @@
             host.append("<br/>");
             host.append("time: " + data.serverTime);
         }
+
+        $("#load-data-button").click(e => {
+            e.preventDefault();
+            console.log("Send request to server");
+            $.get("@Url.Action("GetJSON", "AjaxTest")", { id: 123, msg: "QWE" })
+                .done(data => {
+                    console.log("Received response from server");
+                    const host = $("#panel-js");
+                    host.empty();
+                    host.append("msg: " + data.message);
+                    host.append("<br/>");
+                    host.append("time: " + data.serverTime);
+                });
+        });
     </script>
 }
