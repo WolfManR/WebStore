@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Collections.Generic;
+using AutoMapper;
 
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,6 +14,8 @@ namespace WebStore.Controllers
 {
     public class ShopController : Controller
     {
+        private const string PageSizeConfigName = "PageSize";
+
         private readonly IProductDataService productDataService;
         private readonly IMapper mapper;
         private readonly IConfiguration configuration;
@@ -35,7 +38,7 @@ namespace WebStore.Controllers
 
         public IActionResult Products(int? SectionId, int? BrandId, int Page = 1)
         {
-            var pageSize = int.TryParse(configuration["PageSize"], out var size) ? size : (int?)null;
+            var pageSize = int.TryParse(configuration[PageSizeConfigName], out var size) ? size : (int?)null;
 
             var filter = new ProductFilter
             {
@@ -69,5 +72,26 @@ namespace WebStore.Controllers
             if (product is null) return NotFound();
             return View(mapper.Map<ProductViewModel>(product));
         }
+
+
+
+        #region WebApi
+
+        public IActionResult GetCatalogHtml(int? sectionId, int? brandId, int page) =>
+            PartialView("Partial/_FeaturesItems", GetProducts(sectionId, brandId, page));
+
+        private IEnumerable<ProductViewModel> GetProducts(int? sectionId, int? brandId, int page) =>
+            productDataService.GetProducts(new ProductFilter
+                {
+                    SectionId = sectionId,
+                    BrandId = brandId,
+                    Page = page,
+                    PageSize = int.Parse(configuration[PageSizeConfigName])
+                })
+                .Products
+                .Select(mapper.Map<ProductViewModel>)
+                .OrderBy(p => p.Order);
+
+        #endregion
     }
 }

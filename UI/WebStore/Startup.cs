@@ -17,6 +17,7 @@ using WebStore.Clients.Products;
 using WebStore.Clients.Values;
 using WebStore.Domain.Entities;
 using WebStore.Domain.Entities.Identity;
+using WebStore.Hubs;
 using WebStore.Infrastructure.Middleware;
 using WebStore.Interfaces.Services;
 using WebStore.Interfaces.TestApi;
@@ -39,6 +40,8 @@ namespace WebStore
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSignalR();
+
             services.AddAutoMapper(typeof(EmployeeProfile), typeof(ShopProfile));
 
             services.AddIdentity<Domain.Entities.Identity.User, Role>().AddDefaultTokenProviders();
@@ -90,6 +93,8 @@ namespace WebStore
 
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
+            services.AddRazorPages();
+
             services
                 .AddScoped<IRepo<Employee>, EmployeesClient>()
                 .AddScoped<IProductDataService, ProductsClient>()
@@ -110,8 +115,11 @@ namespace WebStore
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseWebAssemblyDebugging();
                 app.UseBrowserLink();
             }
+
+            app.UseBlazorFrameworkFiles();
             app.UseStatusCodePagesWithReExecute("/Errors/{0}");
             app.UseMiddleware<ErrorHandlingMiddleware>();
             // needed for work MVC
@@ -125,6 +133,11 @@ namespace WebStore
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapHub<InformationHub>("/info");
+
+                endpoints.MapRazorPages();
+                endpoints.MapFallbackToFile("blazor.html");
+
                 endpoints.MapAreaControllerRoute(
                         name: "areaAdmin",
                         areaName: "Admin",

@@ -14,10 +14,11 @@
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="10.0.0" />
     <PackageReference Include="AutoMapper.Collection.EntityFrameworkCore" Version="1.0.1" />
-    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.0.0" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.0.1" />
     <PackageReference Include="BuildBundlerMinifier" Version="3.2.449" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.5" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.5">
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="3.2.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.6" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.6">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
@@ -38,6 +39,7 @@
     <ProjectReference Include="..\..\Services\Libraries\WebStore.DAL\WebStore.DAL.csproj" />
     <ProjectReference Include="..\..\Services\Libraries\WebStore.Interfaces\WebStore.Interfaces.csproj" />
     <ProjectReference Include="..\..\Services\Libraries\WebStore.Services\WebStore.Services.csproj" />
+    <ProjectReference Include="..\WebStore.BlazorUI\WebStore.BlazorUI.csproj" />
   </ItemGroup>
 
 </Project>
